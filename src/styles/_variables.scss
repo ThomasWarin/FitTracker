@@ -1,0 +1,42 @@
+// Couleurs
+$primary-color-900: #383838;
+$primary-color-700: #777777;
+$primary-color-500: #a1a1a1;
+$primary-color-300: #cacaca;
+$primary-color-100: #ececec;
+$accent-color: #910d3f;
+
+// Polices de caractères
+$font-family-base: 'Helvetica, Arial, sans-serif';
+$font-family-heading: 'Georgia, serif';
+
+$font-size-base: 16px;
+$line-height-base: 1.5;
+
+// Espacements
+$spacing-unit: 8px;
+
+$spacing-xs: $spacing-unit;
+$spacing-sm: $spacing-unit * 2;
+$spacing-md: $spacing-unit * 3;
+$spacing-lg: $spacing-unit * 4;
+$spacing-xl: $spacing-unit * 5;
+
+// Bordures
+$border-radius: 5px;
+
+// Transition
+$transition-speed: 0.3s;
+
+// Z-Index
+$zindex-dropdown: 1000;
+$zindex-sticky: 1020;
+$zindex-fixed: 1030;
+$zindex-modal-backdrop: 1040;
+$zindex-modal: 1050;
+
+// Breakpoints pour responsive design
+$breakpoint-xs: 480px;
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1200px;
