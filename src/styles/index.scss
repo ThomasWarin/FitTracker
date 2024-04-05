@@ -1,11 +1,13 @@
 @use 'reset';
 @use 'variables' as v;
 
-* {
-    font-family: 'Bricolage Grotesque', sans-serif !important;
+*,
+*::before,
+*::after {
+    font-family: "Anonymous Pro", monospace;
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Bricolage Grotesque', sans-serif !important;
+    font-family: "Anonymous Pro", monospace;
 }
