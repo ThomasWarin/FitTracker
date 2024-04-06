@@ -1,0 +1,283 @@
+{
+    "workouts": [
+        {
+            "date": "05/04/24",
+            "workout": [
+                {
+                    "title": "EMOM 1'15 x 12",
+                    "movements": [
+                        {
+                            "name": "180m-280m Row",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "1'15 Rest",
+                            "type": "info"
+                        }
+                    ],
+                    "score": "270m"
+                },
+                {
+                    "title": "For Time 11'",
+                    "subtitle": "3 Rounds",
+                    "movements": [
+                        {
+                            "name": "12 Devil Presses @15kg",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "18 DB Steps-Ups Over The Box",
+                            "type": "normal"
+                        }
+                    ],
+                    "score": "67 kg"
+                }
+            ]
+        }, 
+        {
+            "date": "04/04/24",
+            "workout": [
+                {
+                    "title": "For Time 40'",
+                    "movements": [
+                        {
+                            "name": "400m Run",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "40 Burpees Broad Jump",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "400m Run",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "40 Toes To Bar",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "400m Run",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "40 Burpees Over The Band",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "400m Run",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "40 Toes To Bar",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "400m Run",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "40 Burpees Pull-Up",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "400m Run",
+                            "type": "normal"
+                        }
+                    ],
+                    "score": "35'35",
+                    "comment": "SC: Leg Raises / 30 BPU" 
+                }
+            ]
+        },
+        {
+            "date": "02/04/24",
+            "workout": [
+                {
+                    "title": "Strength",
+                    "subtitle": "4 Rounds",
+                    "movements": [
+                        {
+                            "name": "3 Back Squats @75%",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "20' Rest",
+                            "type": "info"
+                        },
+                        {
+                            "name": "2 Back Squats",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "20' Rest",
+                            "type": "info"
+                        },
+                        {
+                            "name": "2 Back Squats",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "2'30 Rest",
+                            "type": "info"
+                        }
+                    ],
+                    "score": "80kg"
+                },
+                {
+                    "title": "EMOM 8'",
+                    "movements": [
+                        {
+                            "name": "1: 60 Double-Unders",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "2: Max Strict Handstand Push-Ups",
+                            "type": "normal"
+                        }
+                    ]
+                },
+                {
+                    "title": "EMOM 12'",
+                    "movements": [
+                        {
+                            "name": "1: Max Strict Ring Pull-Ups",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "2: Max Push-Ups",
+                            "type": "normal"
+                        }
+                    ]
+                },
+                {
+                    "title": "Skill",
+                    "movements": [
+                        {
+                            "name": "Ring Muscle-Ups Attemps",
+                            "type": "normal"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "28/03/24",
+            "workout": [
+                {
+                    "title": "EMOM 1'30 x 8",
+                    "movements": [
+                        {
+                            "name": "1 Clean High Pull",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "Drop",
+                            "type": "info"
+                        },
+                        {
+                            "name": "1 Power Clean",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "1 Hang Power Clean",
+                            "type": "normal"
+                        }
+                    ],
+                    "score": "75kg",
+                    "comment": "2 Fails @80kg à cause de la main"
+                },
+                {
+                    "title": "EMOM 10'",
+                    "movements": [
+                        {
+                            "name": "1: 30s Max Strict Presses @30kg",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "2: 30s Max Push-Ups",
+                            "type": "normal"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "date": "26/03/24",
+            "workout": [
+                {
+                    "title": "EMOM 12'",
+                    "movements": [
+                        {
+                            "name": "8 Deficit Box Pike Push-Ups",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "Max Handstand Push-Ups",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "1/1 Deadlift",
+                            "type": "normal"
+                        }
+                    ]
+                },
+                {
+                    "title": "For Time 10'",
+                    "subtitle": "4 Rounds",
+                    "movements": [
+                        {
+                            "name": "1 Deadlift @120kg",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "2 Wall Walks",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "3 Burpees Over The Bar",
+                            "type": "normal"
+                        }
+                    ],
+                    "score": "9'30"
+                }
+            ]
+        },
+        {
+            "date": "25/03/24",
+            "workout": [
+                {
+                    "title": "For Time 18'",
+                    "movements": [
+                        {
+                            "name": "60 Pull-Ups",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "25 Snatches @30kg",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "30 Pull-Ups",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "15 Snatches @50kg",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "15 Pull-Ups",
+                            "type": "normal"
+                        },
+                        {
+                            "name": "5 Snatches @70kg",
+                            "type": "normal"
+                        }
+                    ],
+                    "score": "145 Reps",
+                    "comment": "Main KO sur la série de 15 Snatches"
+                }
+            ]
+        }
+    ]
+}
