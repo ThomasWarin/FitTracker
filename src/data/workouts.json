@@ -1,5 +1,45 @@
 [
     {
+        "date": "09/04/24",
+        "workout": [
+            {
+                "title": "EMOM 15'",
+                "movements": [
+                    {
+                        "name": "1: 5 Toes To Bar",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "2: 10 Strict Weighted Knee Raises @5kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "3: 30' Hollow Hold Press Back",
+                        "type": "normal"
+                    }
+                ]
+            },
+            {
+                "title": "Strength",
+                "subtitle": "4 Rounds",
+                "movements": [
+                    {
+                        "name": "15m KB Front Rack Lunges @20kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "3 x 3 Handstand Push-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1'30 Rest",
+                        "type": "info"
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "date": "08/04/24",
         "workout": [
             {
