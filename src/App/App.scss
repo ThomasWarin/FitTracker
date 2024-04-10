@@ -121,7 +121,7 @@
                     padding-left: 28px;
                     font-size: 14px;
 
-                    p:not(:last-child) {
+                    .movement:not(:last-of-type) {
                         margin-bottom: 2px;
                     }
 

@@ -62,7 +62,7 @@ return (
                             <div className='movements'>
                                 { workout.subtitle && <p className='subtitle'>{workout.subtitle}</p> }
                                 { workout.movements.map((movement, movementIndex, movements) => (
-                                    <div key={`${date.date}-${workoutIndex}-${movementIndex}`}>
+                                    <div key={`${date.date}-${workoutIndex}-${movementIndex}`} className='movement'>
                                         { movementIndex === 0 && <div className="space"/> }
                                         { movement.type === 'normal'
                                             ? <p>{movement.name}</p>
