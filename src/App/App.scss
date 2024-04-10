@@ -1,4 +1,4 @@
-@import './../styles/variables';
+@import '../styles/variables';
 
 .App {
     padding: 20px 25px 25px 20px;
@@ -17,6 +17,7 @@
             align-items: center;
             gap: 20px;
             position: relative;
+            transition: 0.2s;
 
             &::after {
                 content: '';
@@ -27,6 +28,7 @@
                 height: 100%;
                 border: 1px solid $primary-color-900;
                 z-index: -1;
+                transition: 0.2s;
             }
 
             &:not(.secondary) {
@@ -43,120 +45,17 @@
                 text-transform: uppercase;
                 font-weight: 700;
                 color: $text-color;
-            }
-        }
-    }
-
-    .Card {
-        background-color: $primary-color-100;
-        border: 1px solid $primary-color-900;
-        position: relative;
-        padding: 20px;
-
-        &:not(:last-child) {
-            margin-bottom: $primary-gap;
-        }
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 100%;
-            height: 100%;
-            border: 1px solid $primary-color-900;
-            z-index: -1;
-        }
-
-        &-element {
-            display: flex;
-            align-items: center;
-
-            &.date p {
-                font-size: 14px;
-                font-style: italic;
-                margin-left: auto;
-                color: $primary-color-500;
+                transition: 0.2s;
             }
 
-            &.title {
+            &:hover:first-child {
+                cursor: pointer;
+                background-color: $primary-color-200;
+            }
+
+            .svg-16 {
                 display: flex;
                 align-items: center;
-                gap: 20px;
-                height: 18px;
-
-                .workoutTitle {
-                    font-size: 18px;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                }
-
-                .score {
-                    font-size: 14px;
-                }
-            }
-
-            &.comment {
-                display: flex;
-                align-items: center;
-                gap: 20px;
-                font-size: 14px;
-                font-style: italic;
-                color: $primary-color-500;
-            }
-
-            &.workoutMovements {
-                position: relative;
-
-                .line {
-                    position: absolute;
-                    width: 1px;
-                    height: 100%;
-                    background-color: $primary-color-300;
-                    margin-left: 3.5px;
-                    margin-right: 23.5px;
-                }
-
-                .movements {
-                    padding-left: 28px;
-                    font-size: 14px;
-
-                    .movement:not(:last-of-type) {
-                        margin-bottom: 2px;
-                    }
-
-                    .info {
-                        display: flex;
-                        align-items: center;
-                        gap: 15px;
-                        font-size: 12px;
-                        text-transform: uppercase;
-                        color: $primary-color-500;
-
-                        span {
-                            display: inline-block;
-                            height: 1px;
-                            width: 50px;
-                            background-color: $primary-color-300;
-                        }
-                    }
-
-                    .space {
-                        height: 20px;
-                    }
-
-                    .subtitle {
-                        margin-top: 5px;
-                        font-weight: 700;
-                        text-transform: uppercase;
-                    }
-                }
-            }
-
-            &.space {
-                margin-left: 3.5px;
-                height: 20px;
-                border-left: 1px solid $primary-color-300;
             }
         }
     }
