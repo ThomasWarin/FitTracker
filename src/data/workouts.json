@@ -1,5 +1,81 @@
 [
     {
+        "date": "10/04/24",
+        "workout": [
+            {
+                "title": "EMOM 12 x 1'30",
+                "movements": [
+                    {
+                        "name": "MIN 1/2/3",
+                        "type": "info"
+                    },
+                    {
+                        "name": "2 High Hang Squat Snatches @50%",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1 Drop Snatch",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "MIN 4/5/6",
+                        "type": "info"
+                    },
+                    {
+                        "name": "2 Hang Squat Snatches @55%",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1 Drop Snatch",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "MIN 7/8/9",
+                        "type": "info"
+                    },
+                    {
+                        "name": "2 Low Hang Squat Snatches @60%",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1 Drop Snatch",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "MIN 10/11/12",
+                        "type": "info"
+                    },
+                    {
+                        "name": "2 Squat Snatches @65%",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1 Drop Snatch",
+                        "type": "normal"
+                    }
+                ]
+            },
+            {
+                "title": "EMOM 6'",
+                "movements": [
+                    {
+                        "name": "1 Snatch High Pull @80%",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "Drop",
+                        "type": "info"
+                    },
+                    {
+                        "name": "1 Squat Snatch",
+                        "type": "normal"
+                    }
+                ],
+                "comment": "Charges calculés sur 80kg"
+            }
+        ]
+    },
+    {
         "date": "09/04/24",
         "workout": [
             {
