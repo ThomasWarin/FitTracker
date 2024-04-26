@@ -62,7 +62,7 @@ export const AddWorkoutView = ({ backHome }) => {
             setStepWorkout(false)
             setStepDate(true)
         }
-        if (stepMovements) {
+        if (stepMovements && !stepVerify) {
             if (movements.length === 0) {
                 setStepMovements(false)
                 setStepWorkout(true)
@@ -74,6 +74,9 @@ export const AddWorkoutView = ({ backHome }) => {
                     setMovementAdded(false)
                 }
             }
+        }
+        if (stepVerify) {
+            setStepVerify(false)
         }
     }
 
