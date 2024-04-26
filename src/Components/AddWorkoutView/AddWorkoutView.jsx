@@ -28,6 +28,7 @@ export const AddWorkoutView = ({ backHome }) => {
     const [rest, setRest] = useState(false)
     const [warningDate, setWarningDate] = useState(false)
     const [warningWorkout, setWarningWorkout] = useState(false)
+    const [warningMovement, setWarningMovement] = useState(false)
 
 
     const handleDateChange = (event) => {
@@ -117,7 +118,7 @@ export const AddWorkoutView = ({ backHome }) => {
                             <label htmlFor="inputMovement" className={movementAdded || stepVerify ? 'dataSet': ''}>Movements</label>
                             { movementAdded && movements.map((movement, index) =>  <p key={ index } className={ movement[1] === 'info' ? 'info' : '' } >{ movement[1] === 'info' ? <span /> : null }{ movement[0] }</p> ) }
                             { !stepVerify && <>
-                                <input type="text" name="inputMovement" id="inputMovement" value={ newMovement[0] } onChange={() => handleMovementChange(event)} />
+                                <input type="text" name="inputMovement" id="inputMovement" className={ warningMovement ? 'warning' : '' } value={ newMovement[0] } onChange={() => handleMovementChange(event)} />
                                 <div className='containerCheckbox'>
                                     <input type="checkbox" name="checkboxRest" id="checkboxRest" value={ rest } onClick={() => handleRestChange()} />
                                     <label htmlFor="checkboxRest">Rest</label>
@@ -190,10 +191,17 @@ export const AddWorkoutView = ({ backHome }) => {
                                     setWarningWorkout(true)
                                 }
                             }
-                            if (stepMovements && newMovement[0] !== '') {
-                                setMovements([...movements, newMovement])
-                                setMovementAdded(true)
-                                setNewMovement(['', ''])
+                            if (stepMovements) {
+                                if (newMovement[0] !== '') {
+                                    setMovements([...movements, newMovement])
+                                    setMovementAdded(true)
+                                    setNewMovement(['', ''])
+                                    if (warningMovement) {
+                                        setWarningMovement(false)
+                                    }
+                                } else {
+                                    setWarningMovement(true)
+                                }
                             }
                         }}
                     >
@@ -208,22 +216,34 @@ export const AddWorkoutView = ({ backHome }) => {
                             className='AddWorkout-buttons-item save'
                             type='button'
                             onClick={() => {
+                                // Save Workout
                                 if (stepVerify) {
                                     saveJSON()
                                     backHome('cards')
                                 }
+                                // Check Workout
                                 else {
-                                    setStepVerify(true)
-                                    if (score === '') {
-                                        setIsActiveScore(false)
+                                    // Movements OK
+                                    if (movements.length > 0) {
+                                        setStepVerify(true)
+                                        if (score === '') {
+                                            setIsActiveScore(false)
+                                        }
+                                        if (comment === '') {
+                                            setIsActiveComment(false)
+                                        }
+                                        if (warningMovement) {
+                                            setWarningMovement(false)
+                                        }
                                     }
-                                    if (comment === '') {
-                                        setIsActiveComment(false)
+                                    // No Movements
+                                    else {
+                                        setWarningMovement(true)
                                     }
                                 }
                             }}
                         >
-                            { !stepVerify ? "Save" : "Confirm" } Workout
+                            { !stepVerify ? "Check" : "Save" } Workout
                     </button>
                 </div>}
             </div>
