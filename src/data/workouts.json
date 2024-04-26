@@ -1,5 +1,179 @@
 [
     {
+        "date": "25/04/24",
+        "workout": [
+            {
+                "title": "FBB - Tabata 1",
+                "movements": [
+                    {
+                        "name": "Low Hang Snatch Hold @20kg",
+                        "type": "normal"
+                    }
+                ],
+                "comment": "From 35kg to 20kg"
+            },
+            {
+                "title": "FBB - Tabata 2",
+                "movements": [
+                    {
+                        "name": "Sandbag Hold @70kg",
+                        "type": "normal"
+                    }
+                ]
+            },
+            {
+                "title": "FBB - AMRAP 8'",
+                "movements": [
+                    {
+                        "name": "150m 1KB Farmer Carry @20kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "10/10 1KB Romanian Deadlifts",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "10/10 1KB Single Leg Deadlifts",
+                        "type": "normal"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "date": "24/04/24",
+        "workout": [
+            {
+                "title": "For Time 25'",
+                "subtitle": "3 Rounds",
+                "movements": [
+                    {
+                        "name": "30 Wall Balls",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "30 Burpees Box Jumps Over",
+                        "type": "normal"
+                    }
+                ],
+                "score": "20'34",
+                "comment": "RX: 50 Reps"
+            },
+            {
+                "title": "Weightlifting - Part 1",
+                "subtitle": "3 Rounds",
+                "movements": [
+                    {
+                        "name": "4 Tall Squat Snatches",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1' Rest",
+                        "type": "info"
+                    }
+                ]
+            },
+            {
+                "title": "Weightlifting - Part 2",
+                "subtitle": "5 Rounds",
+                "movements": [
+                    {
+                        "name": "4 Hang Squat Snatches @65%",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1' Rest",
+                        "type": "info"
+                    }
+                ]
+            },
+            {
+                "title": "Weightlifting - EMOM 45' x 8",
+                "movements": [
+                    {
+                        "name": "1 Squat Snatch @75%",
+                        "type": "normal"
+                    }
+                ],
+                "comment": "Charges calculées sur 80kg"
+            }
+        ]
+    },
+    {
+        "date": "23/04/24",
+        "workout": [
+            {
+                "title": "EMOM 1'15 x 12",
+                "movements": [
+                    {
+                        "name": "200m-320m Row",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1'15 Rest",
+                        "type": "info"
+                    }
+                ],
+                "score": "300m",
+                "comment": "Retour de vacances : explosion !"
+            },
+            {
+                "title": "EMOM 10'",
+                "movements": [
+                    {
+                        "name": "1: 1-10 Pull-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "2: 5-20 Push-Ups",
+                        "type": "normal"
+                    }
+                ],
+                "score": "8 Pull-Ups / 10 Push-Ups"
+            }
+        ]
+    },
+    {
+        "date": "11/04/24",
+        "workout": [
+            {
+                "title": "EMOM 25'",
+                "movements": [
+                    {
+                        "name": "1: Sit-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "2: CAL Ski Erg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "3: DB Deadlifts @22,5kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "4: CAL Bike Erg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "5: Log Bag Back Squats @30kg",
+                        "type": "normal"
+                    }
+                ]
+            },
+            {
+                "title": "GRACE - For Time 7'",
+                "movements": [
+                    {
+                        "name": "30 Clean & Jerks @61kg",
+                        "type": "normal"
+                    }
+                ],
+                "score": "4'36"
+            }
+        ]
+    },
+    {
         "date": "10/04/24",
         "workout": [
             {
