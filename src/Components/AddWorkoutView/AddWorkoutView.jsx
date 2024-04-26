@@ -1,6 +1,6 @@
 // Import du style
 import './AddWorkoutView.scss'
-import { CalendarSVG, CancelSVG, ClockSVG, CommentSVG, FlagSVG, MiniCommentSVG, MiniScoreSVG, ScoreSVG } from '../SvgComponents/SvgComponents'
+import { AddNewPartSVG, CalendarSVG, CancelSVG, ClockSVG, CommentSVG, FlagSVG, MiniCommentSVG, MiniScoreSVG, ScoreSVG } from '../SvgComponents/SvgComponents'
 
 import { useState } from 'react'
 import { formatDateFR } from '../../utils/formatDate'
@@ -20,11 +20,12 @@ export const AddWorkoutView = ({ backHome }) => {
     const [workout, setWorkout] = useState('')
     const [subtitle, setSubtitle] = useState('')
     const [movements, setMovements] = useState([])
-    const [comment, setComment] = useState('')
     const [score, setScore] = useState('')
+    const [comment, setComment] = useState('')
 
     /** Temporary data */
     const [newMovement, setNewMovement] = useState(['', ''])
+    const [actualWorkout, setActualWorkout] = useState('')
     const [rest, setRest] = useState(false)
     const [warningDate, setWarningDate] = useState(false)
     const [warningWorkout, setWarningWorkout] = useState(false)
@@ -80,22 +81,96 @@ export const AddWorkoutView = ({ backHome }) => {
         }
     }
 
-    const saveJSON = () => {
-        const newWorkout = {
-            date: date,
-            workout: [
-                {
-                    title: workout,
-                    movements: movements.map(movement => ({
-                        name: movement[0],
-                        type: movement[1]
-                    }))
-                }
-            ]
+    /** Add New Part of the Workout */
+    const addNewPart = () => {
+        // No actual workout
+        if (!actualWorkout) {
+            const temporaryWorkout = {
+                date: date,
+                workout: [
+                    {
+                        title: workout,
+                        movements: movements.map(movement => ({
+                            name: movement[0],
+                            type: movement[1]
+                        }))
+                    }
+                ]
+            }
+            if (subtitle !== '') temporaryWorkout.workout[0].subtitle = subtitle
+            if (score !== '') temporaryWorkout.workout[0].score = score
+            if (comment !== '') temporaryWorkout.workout[0].comment = comment
+
+            setActualWorkout(temporaryWorkout)
         }
-        if (subtitle !== '') newWorkout.workout[0].subtitle = subtitle
-        if (score !== '') newWorkout.workout[0].score = score
-        if (comment !== '') newWorkout.workout[0].comment = comment
+        // Add New Part
+        else {
+            const temporaryPart = {
+                title: workout,
+                movements: movements.map(movement => ({
+                    name: movement[0],
+                    type: movement[1]
+                }))
+            }
+            if (subtitle !== '') temporaryPart.subtitle = subtitle
+            if (score !== '') temporaryPart.score = score
+            if (comment !== '') temporaryPart.comment = comment
+
+            const temporaryWorkout = actualWorkout
+            temporaryWorkout.workout.push(temporaryPart)
+            setActualWorkout(temporaryWorkout)
+        }
+
+        // Reinitialize Inputs
+        setStepWorkout(true)
+        setStepMovements(false)
+        setStepVerify(false)
+        setWorkout('')
+        setSubtitle('')
+        setMovements([])
+        setScore('')
+        setComment('')
+        setRest(false)
+        setMovementAdded(false)
+        setIsActiveScore(false)
+        setIsActiveComment(false)
+    }
+
+    /** Save JSON */
+    const saveJSON = () => {
+        let newWorkout = null
+
+        if (!actualWorkout) {
+            newWorkout = {
+                date: date,
+                workout: [
+                    {
+                        title: workout,
+                        movements: movements.map(movement => ({
+                            name: movement[0],
+                            type: movement[1]
+                        }))
+                    }
+                ]
+            }
+            if (subtitle !== '') newWorkout.workout[0].subtitle = subtitle
+            if (score !== '') newWorkout.workout[0].score = score
+            if (comment !== '') newWorkout.workout[0].comment = comment
+        } else {
+            const temporaryPart = {
+                title: workout,
+                movements: movements.map(movement => ({
+                    name: movement[0],
+                    type: movement[1]
+                }))
+            }
+            if (subtitle !== '') temporaryPart.subtitle = subtitle
+            if (score !== '') temporaryPart.score = score
+            if (comment !== '') temporaryPart.comment = comment
+
+            newWorkout = actualWorkout
+            newWorkout.workout.push(temporaryPart)
+        }
 
         //** Fetch dataWorkouts from LocalStorage */
         const existingData = JSON.parse(localStorage.getItem('dataWorkouts'))
@@ -246,6 +321,11 @@ export const AddWorkoutView = ({ backHome }) => {
                     >
                         <CancelSVG />
                     </button>
+                    {stepVerify && <button type="button" className='AddWorkout-buttons-item secondary'
+                        onClick={() => addNewPart()}
+                    >
+                        <AddNewPartSVG />
+                    </button>}
                     <button
                             className='AddWorkout-buttons-item save'
                             type='button'
