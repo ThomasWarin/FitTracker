@@ -1,6 +1,6 @@
 // Import du style
 import './AddWorkoutView.scss'
-import { CalendarSVG, ClockSVG, CommentSVG, FlagSVG, MiniCommentSVG, MiniScoreSVG, ScoreSVG } from '../SvgComponents/SvgComponents'
+import { CalendarSVG, CancelSVG, ClockSVG, CommentSVG, FlagSVG, MiniCommentSVG, MiniScoreSVG, ScoreSVG } from '../SvgComponents/SvgComponents'
 
 import { useState } from 'react'
 import { formatDateFR } from '../../utils/formatDate'
@@ -30,7 +30,7 @@ export const AddWorkoutView = ({ backHome }) => {
     const [warningWorkout, setWarningWorkout] = useState(false)
     const [warningMovement, setWarningMovement] = useState(false)
 
-
+    /** Inputs Change */
     const handleDateChange = (event) => {
         setDate(formatDateFR(event.target.value))
     }
@@ -54,6 +54,27 @@ export const AddWorkoutView = ({ backHome }) => {
     }
     const handleCommentChange = (event) => {
         setComment(event.target.value)
+    }
+
+    /** Cancel Last Action */
+    const cancelLastAction = () => {
+        if (stepWorkout) {
+            setStepWorkout(false)
+            setStepDate(true)
+        }
+        if (stepMovements) {
+            if (movements.length === 0) {
+                setStepMovements(false)
+                setStepWorkout(true)
+            }
+            else {
+                const newMovements = movements.slice(0, -1)
+                setMovements(newMovements)
+                if (newMovements.length === 0) {
+                    setMovementAdded(false)
+                }
+            }
+        }
     }
 
     const saveJSON = () => {
@@ -101,12 +122,12 @@ export const AddWorkoutView = ({ backHome }) => {
                         <ClockSVG />
                         <div className='AddWorkout-inputContainer-item'>
                             <label htmlFor="inputWorkoutTitle" className={!stepWorkout ? 'dataSet': ''}>Workout</label>
-                            {stepWorkout && <input type="text" name="inputWorkoutTitle" id="inputWorkoutTitle" className={ warningWorkout ? 'warning' : '' } placeholder="For Time 12'" onChange={() => handleWorkoutChange(event)} />}
+                            {stepWorkout && <input type="text" name="inputWorkoutTitle" id="inputWorkoutTitle" className={ warningWorkout ? 'warning' : '' } value={ workout } placeholder="For Time 12'" onChange={() => handleWorkoutChange(event)} />}
                             {stepMovements && <p>{ workout }</p>}
                         </div>
                         <div className='AddWorkout-inputContainer-item'>
                             <label htmlFor="inputWorkoutSubtitle" className={!stepWorkout ? 'dataSet': ''}>Info</label>
-                            {stepWorkout && <input type="text" name="inputWorkoutSubtitle" id="inputWorkoutSubtitle" placeholder="3 Rounds" onChange={() => handleSubtitleChange(event)} />}
+                            {stepWorkout && <input type="text" name="inputWorkoutSubtitle" id="inputWorkoutSubtitle" value={ subtitle } placeholder="3 Rounds" onChange={() => handleSubtitleChange(event)} />}
                             {stepMovements && <p>{ subtitle }</p>}
                         </div>
                     </div>}
@@ -164,6 +185,11 @@ export const AddWorkoutView = ({ backHome }) => {
                             <CommentSVG />
                         </button>
                     </> }
+                    {!stepMovements && !stepDate  && <button type="button" className='AddWorkout-buttons-item secondary'
+                        onClick={() => cancelLastAction()}
+                    >
+                        <CancelSVG />
+                    </button>}
                     <button
                         className='AddWorkout-buttons-item primary'
                         type='button'
@@ -212,6 +238,11 @@ export const AddWorkoutView = ({ backHome }) => {
                     </button>
                 </div>}
                 {stepMovements && <div className="AddWorkout-buttons-row">
+                    <button type="button" className='AddWorkout-buttons-item secondary'
+                        onClick={() => cancelLastAction()}
+                    >
+                        <CancelSVG />
+                    </button>
                     <button
                             className='AddWorkout-buttons-item save'
                             type='button'
