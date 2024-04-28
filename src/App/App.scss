@@ -59,4 +59,70 @@
             }
         }
     }
+
+    .Main {
+        .overlay {
+            position: absolute;
+            z-index: 400;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .cancelPopup {
+                position: relative;
+                width: 300px;
+                background-color: $primary-color-100;
+                border: 1px solid $primary-color-900;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+
+                &-row {
+                    display: flex;
+                    gap: 20px;
+                }
+
+                p {
+                    text-transform: uppercase;
+                }
+
+                button {
+                    position: relative;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    font-size: 14px;
+                    height: 40px;
+                    width: 80px;
+                    border: 1px solid $primary-color-900;
+                    cursor: pointer;
+
+                    &.no {
+                        background-color: $secondary-color;
+                    }
+
+                    &.yes {
+                        background-color: $primary-color-200;
+                    }
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    z-index: -1;
+                    top: 5px;
+                    left: 5px;
+                    width: 100%;
+                    height: 100%;
+                    border: 1px solid $primary-color-900;
+                }
+            }
+        }
+    }
 }

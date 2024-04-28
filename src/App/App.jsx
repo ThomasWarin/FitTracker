@@ -17,6 +17,7 @@ function App() {
         dataWorkouts = workouts
     }
 
+    const [isOpenPopup, setIsOpenPopup] = useState(false)
     const [currentView, setCurrentView] = useState('cards')
     const handleViewChange = (view) => {
         setCurrentView(view)
@@ -29,7 +30,7 @@ function App() {
                     type="button"
                     className='Header-button'
                     onClick={() => {
-                        currentView === 'cards' ? handleViewChange('addWorkout') : handleViewChange('cards')
+                        currentView === 'cards' ? handleViewChange('addWorkout') : setIsOpenPopup(true)
                     }}
                 >
                     <span className='svg-16'>
@@ -67,10 +68,20 @@ function App() {
                 </> }
             </header>
 
-            <main>
+            <main className='Main'>
 
             { currentView === 'cards' && <CardsView workouts={ dataWorkouts } /> }
             { currentView === 'addWorkout' && <AddWorkoutView backHome={ handleViewChange } /> }
+
+            {isOpenPopup && <div className="overlay">
+                <div className="cancelPopup">
+                    <p>Cancel workout creation?</p>
+                    <div className="cancelPopup-row">
+                        <button className='no' onClick={() => setIsOpenPopup(false)}>No</button>
+                        <button className='yes' onClick={() => { handleViewChange('cards'); setIsOpenPopup(false); }}>Yes</button>
+                    </div>
+                </div>
+            </div>}
 
             </main>
         </div>
