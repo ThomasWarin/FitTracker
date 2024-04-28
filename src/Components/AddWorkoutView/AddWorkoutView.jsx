@@ -174,7 +174,17 @@ export const AddWorkoutView = ({ backHome }) => {
 
         //** Fetch dataWorkouts from LocalStorage */
         const existingData = JSON.parse(localStorage.getItem('dataWorkouts'))
-        existingData.unshift(newWorkout)
+        const isDateExist = existingData.find((item) => item.date === newWorkout.date) !== undefined
+
+        if (isDateExist) {
+            existingData.forEach((item) => {
+                if (item.date === newWorkout.date) {
+                    item.workout.push(...newWorkout.workout);
+                }
+            })
+        } else {
+            existingData.unshift(newWorkout)
+        }
 
         localStorage.setItem('dataWorkouts', JSON.stringify(existingData))
     }
