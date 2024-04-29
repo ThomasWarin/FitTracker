@@ -1,5 +1,58 @@
 [
     {
+        "date": "29/04/24",
+        "workout": [
+            {
+                "title": "Strength",
+                "subtitle": "4 Rounds",
+                "movements": [
+                    {
+                        "name": "1 Back Squat @95kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "20' Rest",
+                        "type": "info"
+                    },
+                    {
+                        "name": "1 Back Squat",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "20' Rest",
+                        "type": "info"
+                    },
+                    {
+                        "name": "1 Back Squat",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "3' Rest",
+                        "type": "info"
+                    }
+                ]
+            },
+            {
+                "title": "AMRAP 8'",
+                "movements": [
+                    {
+                        "name": "40m Walking Lunges",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "20m Bear Crawl",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "40 Hollow Rocks",
+                        "type": "normal"
+                    }
+                ],
+                "comment": "Never retry"
+            }
+        ]
+    },
+    {
         "date": "25/04/24",
         "workout": [
             {
