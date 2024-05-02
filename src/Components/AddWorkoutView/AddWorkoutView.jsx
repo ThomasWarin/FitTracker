@@ -1,6 +1,6 @@
 // Import du style
 import './AddWorkoutView.scss'
-import { AddNewPartSVG, CalendarSVG, CancelSVG, ClockSVG, CommentSVG, FlagSVG, MiniCommentSVG, MiniScoreSVG, ScoreSVG } from '../SvgComponents/SvgComponents'
+import { Icon } from '../SvgComponents/SvgComponents'
 
 import { useState } from 'react'
 import { formatDateFR } from '../../utils/formatDate'
@@ -64,7 +64,15 @@ export const AddWorkoutView = ({ backHome }) => {
             setStepDate(true)
         }
         if (stepMovements && !stepVerify) {
-            if (movements.length === 0) {
+            if (isActiveComment) {
+                setIsActiveComment(false)
+                setComment('')
+            }
+            else if (isActiveScore) {
+                setIsActiveScore(false)
+                setScore('')
+            }
+            else if (movements.length === 0) {
                 setStepMovements(false)
                 setStepWorkout(true)
             }
@@ -197,7 +205,7 @@ export const AddWorkoutView = ({ backHome }) => {
 
                     {/* Input Date */}
                     <div className='AddWorkout-inputContainer'>
-                        <CalendarSVG />
+                        <Icon name='Calendar' size={ 15 } color="#4C5948" />
                         <div className='AddWorkout-inputContainer-item'>
                             <label htmlFor="inputDate" className={!stepDate ? 'dataSet': ''}>Date</label>
                             {stepDate && <input type="date" name="inputDate" id="inputDate" className={ warningDate ? 'warning' : '' } onChange={() => handleDateChange(event)} />}
@@ -207,7 +215,7 @@ export const AddWorkoutView = ({ backHome }) => {
 
                     {/* Input Workout & Subtitle */}
                     {!stepDate && <div className='AddWorkout-inputContainer'>
-                        <ClockSVG />
+                        <Icon name='Anvil' size={ 15 } color="#4C5948" />
                         <div className='AddWorkout-inputContainer-item'>
                             <label htmlFor="inputWorkoutTitle" className={!stepWorkout ? 'dataSet': ''}>Workout</label>
                             {stepWorkout && <input type="text" name="inputWorkoutTitle" id="inputWorkoutTitle" className={ warningWorkout ? 'warning' : '' } value={ workout } placeholder="For Time 12'" onChange={() => handleWorkoutChange(event)} />}
@@ -222,7 +230,7 @@ export const AddWorkoutView = ({ backHome }) => {
 
                     {/* Input Movement */}
                     {stepMovements && <div className='AddWorkout-inputContainer'>
-                        <FlagSVG />
+                        <Icon name='Dumbbell' size={ 15 } color="#4C5948" />
                         <div className='AddWorkout-inputContainer-item'>
                             <label htmlFor="inputMovement" className={movementAdded || stepVerify ? 'dataSet': ''}>Movements</label>
                             { movementAdded && movements.map((movement, index) =>  <p key={ index } className={ movement[1] === 'info' ? 'info' : '' } >{ movement[1] === 'info' ? <span /> : null }{ movement[0] }</p> ) }
@@ -238,7 +246,7 @@ export const AddWorkoutView = ({ backHome }) => {
 
                     {/* Input Score */}
                     {isActiveScore && <div className='AddWorkout-inputContainer'>
-                        <MiniScoreSVG />
+                        <Icon name='Trophy' size={ 15 } color="#4C5948" />
                         <div className='AddWorkout-inputContainer-item'>
                             <label htmlFor="inputScore" className={stepVerify ? 'dataSet': ''}>Score</label>
                             {!stepVerify && <input type="text" name="inputScore" value={ score } id="inputScore" onChange={() => handleScoreChange(event)} />}
@@ -248,7 +256,7 @@ export const AddWorkoutView = ({ backHome }) => {
 
                     {/* Input Comment */}
                     {isActiveComment && <div className='AddWorkout-inputContainer'>
-                        <MiniCommentSVG />
+                        <Icon name='MessageSquareText' size={ 15 } color="#4C5948" />
                         <div className='AddWorkout-inputContainer-item'>
                             <label htmlFor="inputComment" className={stepVerify ? 'dataSet': ''}>Comment</label>
                             {!stepVerify && <input type="text" name="inputComment" value={ comment } id="inputComment" onChange={() => handleCommentChange(event)} />}
@@ -265,18 +273,18 @@ export const AddWorkoutView = ({ backHome }) => {
                         <button type="button" className='AddWorkout-buttons-item secondary'
                             onClick={() => { setIsActiveScore(!isActiveScore); setScore(''); }}
                         >
-                            <ScoreSVG />
+                            <Icon name='Trophy' size={ 20 } color="#2C2C2C" />
                         </button>
                         <button type="button" className='AddWorkout-buttons-item secondary'
                             onClick={() => { setIsActiveComment(!isActiveComment); setComment(''); }}
                         >
-                            <CommentSVG />
+                            <Icon name='MessageSquareText' size={ 20 } color="#2C2C2C" />
                         </button>
                     </> }
                     {!stepMovements && !stepDate  && <button type="button" className='AddWorkout-buttons-item secondary'
                         onClick={() => cancelLastAction()}
                     >
-                        <CancelSVG />
+                        <Icon name='Undo2' size={ 20 } color="#2C2C2C" />
                     </button>}
                     <button
                         className='AddWorkout-buttons-item primary'
@@ -329,12 +337,12 @@ export const AddWorkoutView = ({ backHome }) => {
                     <button type="button" className='AddWorkout-buttons-item secondary'
                         onClick={() => cancelLastAction()}
                     >
-                        <CancelSVG />
+                        <Icon name='Undo2' size={ 20 } color="#2C2C2C" />
                     </button>
                     {stepVerify && <button type="button" className='AddWorkout-buttons-item secondary'
                         onClick={() => addNewPart()}
                     >
-                        <AddNewPartSVG />
+                        <Icon name='CopyPlus' size={ 20 } color="#2C2C2C" />
                     </button>}
                     <button
                             className='AddWorkout-buttons-item save'
