@@ -41,6 +41,9 @@
             }
 
             p {
+                display: flex;
+                gap: 20px;
+                align-items: center;
                 font-size: 20px;
                 text-transform: uppercase;
                 font-weight: 700;
@@ -51,11 +54,6 @@
             &:hover:first-child {
                 cursor: pointer;
                 background-color: $primary-color-200;
-            }
-
-            .svg-16 {
-                display: flex;
-                align-items: center;
             }
         }
     }

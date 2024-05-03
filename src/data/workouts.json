@@ -1,5 +1,126 @@
 [
     {
+        "date": "03/05/24",
+        "workout": [
+            {
+                "title": "EMOM 1'15 x 12",
+                "movements": [
+                    {
+                        "name": "210m-340m Row",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1'15 Rest",
+                        "type": "info"
+                    }
+                ],
+                "score": "280m - 1'45/500m"
+            },
+            {
+                "title": "For Time 15'",
+                "movements": [
+                    {
+                        "name": "100 Handstand Push-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "Each break: 10 Toes to Bar",
+                        "type": "info"
+                    }
+                ],
+                "score": "14'50",
+                "comment": "SC: Abmat HSPU + Leg Raises"
+            }
+        ]
+    },
+    {
+        "date": "30/04/24",
+        "workout": [
+            {
+                "title": "For Time 10'",
+                "movements": [
+                    {
+                        "name": "10 Clean & Jerks @61kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1' Rest",
+                        "type": "info"
+                    },
+                    {
+                        "name": "10 Clean & Jerks @83kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1' Rest",
+                        "type": "info"
+                    },
+                    {
+                        "name": "10 Clean & Jerks @102kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1' Rest",
+                        "type": "info"
+                    },
+                    {
+                        "name": "MAX Clean & Jerks @111kg",
+                        "type": "normal"
+                    }
+                ],
+                "comment": "RX: 2 Premières séries + 1 Rep @90kg"
+            },
+            {
+                "title": "GYM - Toes to Bar",
+                "subtitle": "EMOM 15'",
+                "movements": [
+                    {
+                        "name": "1: 5-15 Toes to Bar",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "2: 10 Weighted Knee Raises @5kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "3: 20 Pike Pops",
+                        "type": "normal"
+                    }
+                ]
+            },
+            {
+                "title": "GYM - Handstand Push-Ups",
+                "subtitle": "4 Rounds",
+                "movements": [
+                    {
+                        "name": "10 DB Thrusters @17.5kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "20' Rest",
+                        "type": "info"
+                    },
+                    {
+                        "name": "X Deficit Handstand Push-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "20' Rest",
+                        "type": "info"
+                    },
+                    {
+                        "name": "X Handstand Push-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "1'30 Rest",
+                        "type": "info"
+                    }
+                ]
+            }
+        ]
+    },
+    {
         "date": "29/04/24",
         "workout": [
             {

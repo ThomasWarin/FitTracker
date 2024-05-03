@@ -30,6 +30,7 @@ export const AddWorkoutView = ({ backHome }) => {
     const [warningDate, setWarningDate] = useState(false)
     const [warningWorkout, setWarningWorkout] = useState(false)
     const [warningMovement, setWarningMovement] = useState(false)
+    const [showRow, setShowRow] = useState({})
 
     /** Inputs Change */
     const handleDateChange = (event) => {
@@ -197,6 +198,14 @@ export const AddWorkoutView = ({ backHome }) => {
         localStorage.setItem('dataWorkouts', JSON.stringify(existingData))
     }
 
+    /** Toggle Parts Workout */
+    const toggleRow = (index) => {
+        setShowRow(prevState => ({
+            ...prevState,
+            [index]: !prevState[index]
+        }))
+    }
+
     return (
         <>
             <div className="AddWorkout">
@@ -211,6 +220,36 @@ export const AddWorkoutView = ({ backHome }) => {
                             {stepDate && <input type="date" name="inputDate" id="inputDate" className={ warningDate ? 'warning' : '' } onChange={() => handleDateChange(event)} />}
                             {!stepDate && <p>{ date }</p>}
                         </div>
+                    </div>
+
+                    {/* Workouts Parts */}
+                    <div className="AddWorkout-parts">
+                        {actualWorkout && actualWorkout.workout.map((workout, index) => (
+                            <div key={`${workout.title}-${index}`} className="AddWorkout-parts-container">
+                                <div className="AddWorkout-parts-header">
+                                    <p>{workout.title}</p>
+                                    <button type="button" onClick={() => toggleRow(index)}>
+                                        {!showRow[index] && <Icon name='ChevronDown' size={ 12 } color="#4C5948" />}
+                                        {showRow[index] && <Icon name='ChevronUp' size={ 12 } color="#4C5948" />}
+                                    </button>
+                                </div>
+                                {workout.subtitle && 
+                                    <div className="AddWorkout-parts-subtitle">
+                                        {workout.subtitle}
+                                    </div>
+                                }
+                                {showRow[index] &&
+                                    <div className="AddWorkout-parts-movements">
+                                        {workout.movements.map((movement) => (
+                                            <p className={movement.type === 'info' ? 'info' : ''}>
+                                                {movement.type === 'info' ? <span /> : null}
+                                                {movement.name}
+                                            </p>
+                                        ))}
+                                    </div>
+                                }
+                            </div>
+                        ))}
                     </div>
 
                     {/* Input Workout & Subtitle */}
