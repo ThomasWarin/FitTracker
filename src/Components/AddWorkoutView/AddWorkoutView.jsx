@@ -7,7 +7,7 @@ import { formatDateFR } from "../../utils/formatDate"
 import { isEmptyArray } from "../../utils/isEmptyArray"
 import { isInvalidDate } from "../../utils/isInvalidDate"
 
-const PartWorkout = ({ workout, editWorkout, id }) => {
+const PartWorkout = ({ workout, editWorkout, deleteWorkout, id }) => {
     const [showMovements, setShowMovements] = useState(false)
 
     return (
@@ -18,6 +18,12 @@ const PartWorkout = ({ workout, editWorkout, id }) => {
                     {workout.subtitle && <p className="subtitle">{workout.subtitle}</p>}
                 </div>
                 <div className='buttons'>
+                <button
+                    type="button"
+                    onClick={() => deleteWorkout(workout.id)}
+                >
+                    <Icon name="Trash2" size={10} color="#2C2C2C" />
+                </button>
                 <button
                     type="button"
                     onClick={() => editWorkout(workout)}
@@ -244,6 +250,16 @@ export const AddWorkoutView = ({ backHome }) => {
         setValueComment('')
         setLabelMovements(true)
     }
+    /** Delete Workout */
+    const deleteWorkout = (idToDelete) => {
+        const updatedWorkout = {...workoutCreated}
+        updatedWorkout.workout = updatedWorkout.workout.filter(item => item.id !== idToDelete)
+        if (updatedWorkout.workout.length === 0) {
+            setWorkoutCreated(null)
+        } else {
+            setWorkoutCreated(updatedWorkout)
+        }
+    }
 
     /** Save JSON */
     const saveJSON = () => {
@@ -350,7 +366,13 @@ export const AddWorkoutView = ({ backHome }) => {
                     {/* Workouts Parts */}
                     {workoutCreated && <div className="AddWorkoutForm-workouts">
                         {workoutCreated.workout.map((workout, indexWorkout) => (
-                            <PartWorkout key={`partWorkout-${indexWorkout}`} workout={workout} editWorkout={editWorkout} id={idEditing} />
+                            <PartWorkout
+                                key={`partWorkout-${indexWorkout}`}
+                                workout={workout}
+                                editWorkout={editWorkout}
+                                deleteWorkout={deleteWorkout}
+                                id={idEditing}
+                            />
                         ))}
                     </div>}
 
