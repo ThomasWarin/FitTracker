@@ -1,10 +1,10 @@
 @import '../../styles/variables';
 
-.AddWorkout {
+.AddWorkoutForm {
+    position: relative;
     background-color: $primary-color-100;
     border: 1px solid $primary-color-900;
-    position: relative;
-    padding: 20px 20px 0;
+    padding: 15px 20px 0;
     margin-bottom: 20px;
 
     &::after {
@@ -18,24 +18,22 @@
         border: 1px solid $primary-color-900;
     }
 
-    &-form {
+    &-container {
         position: relative;
 
         .line {
             position: absolute;
-            z-index: 0;
             width: 1px;
-            height: calc(100% - 1px);
+            height: 100%;
             background-color: $primary-color-300;
         }
     }
 
-    &-inputContainer {
+    &-fieldset {
         position: relative;
-        z-index: 200;
         display: flex;
-        gap: 11px;
-        margin-left: -11px;
+        gap: 12px;
+        margin-left: -12px;
         margin-bottom: 20px;
 
         svg {
@@ -45,19 +43,14 @@
             background-color: $primary-color-100;
         }
 
-        &-item {
+        &-input {
+            padding-top: 1px;
             flex: 1;
             position: relative;
 
-            .containerCheckbox {
-                display: flex;
-                align-items: center;
-                margin-top: 10px;
-            }
-
             label {
-                position: relative;
-                z-index: 200;
+                position: absolute;
+                z-index: 100;
                 left: 7px;
                 color: $text-color;
                 font-weight: 700;
@@ -68,32 +61,25 @@
                 padding: 0 10px;
                 transition: 0.2s;
 
-                &.dataSet {
-                    height: 25px;
-                    left: 0;
-                    padding: 0;
+                &.left {
+                    left: -10px;
                 }
 
-                &:not([for="checkboxRest"]) {
-                    position: absolute;
-                }
-
-                &[for="checkboxRest"] {
-                    position: relative;
-                    left: 0;
-                    padding: 0 10px;
+                &.secondaryLabel {
+                    font-size: 14px;
                 }
             }
 
-            input:not([type="checkbox"]) {
-                margin-top: 9px;
+            input {
+                position: relative;
+                margin-top: 11px;
                 height: 40px;
                 width: 100%;
                 border-radius: 4px;
                 border: 1px solid $primary-color-900;
                 background-color: $primary-color-100;
                 text-align: center;
-                font-size: 16px;
+                font-size: 14px;
                 font-style: italic;
                 color: $text-color;
 
@@ -105,171 +91,189 @@
                 &[type="date"] {
                     display: flex;
                     justify-content: center;
+                    cursor: pointer;
                 }
 
                 &.warning {
-                    position: relative;
                     border: 1px solid $warning-color;
-                    animation: warningAnimation 0.3s linear 1;
+                    animation: warningAnimation 0.2s forwards;
 
                     @keyframes warningAnimation {
-                        0% { left: 0 }
-                        10% { left: 3px }
-                        30% { left: -3px }
-                        50% { left: 3px }
-                        70% { left: -3px }
-                        50% { left: 3px }
-                        100% { left: 0 }
+                        0%, 100% { left : 0 }
+                        20%, 60% { left : 2px }
+                        40%, 80% { left : -2px }
                     }
                 }
             }
 
-            input[type="checkbox"] {
-                border: 1px solid $primary-color-900;
-                margin: 0;
-                height: 16px;
-                width: 16px;
-            }
+            .movementsList {
+                margin-top: 35px;
+                margin-bottom: 10px;
 
-            p {
-                font-size: 14px;
-            }
+                li {
+                    font-size: 14px;
+                    margin-bottom: 2px;
+                    color: $text-color;
+                    text-transform: uppercase;
 
-            p:first-of-type {
-                margin-top: 20px;
-                padding: 17px 0 0;
-            }
 
-            .info {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                font-size: 12px;
-                text-transform: uppercase;
-                color: $primary-color-500;
+                    &.info {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        color: $primary-color-500;
 
-                span {
-                    display: inline-block;
-                    height: 1px;
-                    width: 50px;
-                    background-color: $primary-color-300;
+                        span {
+                            height: 1px;
+                            width: 30px;
+                            background-color: $primary-color-300;
+                        }
+                    }
                 }
             }
         }
+
+        &.movementsFieldset {
+            margin-bottom: 10px;
+        }
     }
 
-    &-parts {
+    &-workouts {
         display: flex;
         flex-direction: column;
+        gap: 10px;
         margin-left: 25px;
         margin-bottom: 20px;
         font-size: 12px;
         text-transform: uppercase;
-        gap: 10px;
+        color: $text-color;
 
-        &-container {
-            padding: 10px 20px;
-            background-color: $primary-color-150;
-            border: 1px solid $primary-color-300;
+        &-item {
             border-radius: 4px;
-        }
+            background-color: $primary-color-200;
+            border: 1px solid $primary-color-300;
+            padding: 10px 20px;
+            transition: 0.2s;
 
-        &-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-weight: 700;
-        }
-
-        &-subtitle {
-            margin-bottom: 5px;
-
-            &:last-child {
-                margin-bottom: 0;
-            }
-        }
-
-        &-movements {
-            padding-left: 10px;
-
-            p:not(:last-of-type) {
-                margin-bottom: 2px;
-            }
-
-            .info {
+            .header {
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
-                gap: 15px;
-                color: $primary-color-500;
 
-                span {
-                    display: inline-block;
-                    height: 1px;
-                    width: 20px;
-                    background-color: $primary-color-300;
+                .title {
+                    font-weight: 700;
+                }
+
+                .subtitle {
+                    font-style: italic;
+                }
+
+                .buttons {
+                    display: flex;
+                    gap: 5px;
+
+                    button {
+                        padding: 4px;
+                        background-color: transparent;
+                        border: none;
+                        cursor: pointer;
+                        border-radius: 4px;
+                        display: flex;
+                        align-items: center;
+                        transition: 0.2s;
+
+                        &:hover {
+                            background-color: $primary-color-300;
+                        }
+                    }
+                }
+
+                &.showMovements {
+                    margin-bottom: 10px;
+                }
+
+            }
+
+            .movements {
+                li {
+                    margin-bottom: 2px;
+
+                    &.info {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        color: $primary-color-900;
+                    }
+
+                    span {
+                        height: 1px;
+                        width: 30px;
+                        background-color: #B9CDBF;
+                    }
                 }
             }
-        }
 
-        button {
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            background-color: transparent;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-
-            &:hover {
-                background-color: $primary-color-200;
+            &.editing {
+                background-color: $editing-color-200;
+                border: 1px solid $editing-color-300;
             }
         }
     }
 
-    &-buttons {
+    &-buttonContainer {
+        margin-left: 25px;
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
 
-        &-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: $primary-gap;
-            margin-bottom: 20px;
-        }
-
-        &-item {
+        button {
             cursor: pointer;
-            position: relative;
-            height: 60px;
-            font-size: 16px;
-            font-weight: 700;
+            flex: 1;
             text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 700;
+            color: $primary-color-900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
             border: 1px solid $primary-color-900;
             background-color: $secondary-color;
+            border-radius: 4px;
+            height: 40px;
 
-            &.primary {
-                padding: 0 32px;
-                flex-grow: 1;
+            &.svgOnly {
+                max-width: 41px;
             }
+        }
+    }
 
-            &.secondary {
-                min-width: 60px;
-                background-color: $primary-color-100;
-            }
+    &-buttonSubmit {
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        height: 60px;
+        width: 100%;
+        border: 1px solid $primary-color-900;
+        background-color: $primary-color-100;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: 700;
+        color: $text-color;
 
-            &.save {
-                flex-grow: 1;
-            }
-
-            &::after {
-                content: '';
-                position: absolute;
-                z-index: -1;
-                left: 5px;
-                top: 5px;
-                width: 100%;
-                height: 100%;
-                border: 1px solid $primary-color-900;
-            }
+        &::after {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            top: 5px;
+            left: 5px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid $primary-color-900;
         }
     }
 }

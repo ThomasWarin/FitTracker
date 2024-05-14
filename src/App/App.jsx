@@ -36,8 +36,8 @@ function App() {
                     }}
                 >
                     <p>
-                        {currentView === 'cards' && <Icon name='Plus' size={ 16 } color="#4C5948" />}
-                        {currentView === 'addWorkout' && <Icon name='ChevronLeft' size={ 16 } color="#4C5948" />}
+                        {currentView === 'cards' && <Icon name='Plus' size={ 16 } color="#2C2C2C" />}
+                        {currentView === 'addWorkout' && <Icon name='ChevronLeft' size={ 16 } color="#2C2C2C" />}
                         { currentView === 'cards' ? "Workout" : "Back" }
                     </p>
                 </button>

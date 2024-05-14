@@ -1,184 +1,310 @@
 // Import du style
-import './AddWorkoutView.scss'
-import { Icon } from '../SvgComponents/SvgComponents'
+import "./AddWorkoutView.scss"
+import { Icon } from "../SvgComponents/SvgComponents"
 
-import { useState } from 'react'
-import { formatDateFR } from '../../utils/formatDate'
+import { useState } from "react"
+import { formatDateFR } from "../../utils/formatDate"
+import { isEmptyArray } from "../../utils/isEmptyArray"
+import { isInvalidDate } from "../../utils/isInvalidDate"
+
+const PartWorkout = ({ workout, editWorkout, id }) => {
+    const [showMovements, setShowMovements] = useState(false)
+
+    return (
+        <div className={`AddWorkoutForm-workouts-item ${workout.id === id ? 'editing' : ''}`}>
+            <div className={`header ${showMovements ? 'showMovements': ''}`}>
+                <div>
+                    <p className="title">{workout.title}</p>
+                    {workout.subtitle && <p className="subtitle">{workout.subtitle}</p>}
+                </div>
+                <div className='buttons'>
+                <button
+                    type="button"
+                    onClick={() => editWorkout(workout)}
+                >
+                    <Icon name="PenLine" size={10} color="#2C2C2C" />
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setShowMovements(prevState => !prevState)}
+                >
+                    { showMovements
+                        ? <Icon name="ChevronUp" size={12} color="#2C2C2C" />
+                        : <Icon name="ChevronDown" size={12} color="#2C2C2C" />
+                    }
+                </button>
+                </div>
+            </div>
+
+            {showMovements && <>
+                <ul className="movements">
+                    {workout.movements.map((movement, indexMovement) => (
+                        <li
+                            key={`partWorkout-${indexMovement}`}
+                            className={movement.type === 'info' ? 'info' : ''}
+                        >
+                            {movement.type === 'info'? <span /> : null}
+                            {movement.name}
+                        </li>
+                    ))}
+                </ul>
+                </>}
+        </div>
+    )
+}
 
 export const AddWorkoutView = ({ backHome }) => {
-    /** Step State */
-    const [stepDate, setStepDate] = useState(true)
-    const [stepWorkout, setStepWorkout] = useState(false)
-    const [stepMovements, setStepMovements] = useState(false)
-    const [movementAdded, setMovementAdded] = useState(false)
-    const [isActiveComment, setIsActiveComment] = useState(false)
-    const [isActiveScore, setIsActiveScore] = useState(false)
-    const [stepVerify, setStepVerify] = useState(false)
+    const [labelMovements, setLabelMovements] = useState(true)
 
-    /** Data to saved */
-    const [date, setDate] = useState('')
-    const [workout, setWorkout] = useState('')
-    const [subtitle, setSubtitle] = useState('')
-    const [movements, setMovements] = useState([])
-    const [score, setScore] = useState('')
-    const [comment, setComment] = useState('')
+    const [valueDate, setValueDate] = useState('')
+    const [valueWorkout, setValueWorkout] = useState('')
+    const [valueSubtitle, setValueSubtitle] = useState('')
+    const [valueMovement, setValueMovement] = useState(['', ''])
+    const [valueScore, setValueScore] = useState('')
+    const [valueComment, setValueComment] = useState('')
 
-    /** Temporary data */
-    const [newMovement, setNewMovement] = useState(['', ''])
-    const [actualWorkout, setActualWorkout] = useState('')
-    const [rest, setRest] = useState(false)
-    const [warningDate, setWarningDate] = useState(false)
-    const [warningWorkout, setWarningWorkout] = useState(false)
-    const [warningMovement, setWarningMovement] = useState(false)
-    const [showRow, setShowRow] = useState({})
+    const [arrayMovements, setArrayMovements] = useState([])
+    const [workoutCreated, setWorkoutCreated] = useState(null)
+    const [isEditing, setIsEditing] = useState(false)
+    const [idEditing, setIdEditing] = useState(0)
 
-    /** Inputs Change */
-    const handleDateChange = (event) => {
-        setDate(formatDateFR(event.target.value))
-    }
-    const handleWorkoutChange = (event) => {
-        setWorkout(event.target.value)
-    }
-    const handleSubtitleChange = (event) => {
-        setSubtitle(event.target.value)
-    }
-    const handleMovementChange = (event) => {
-        const type = rest ? 'info' : 'normal'
-        setNewMovement([event.target.value, type])
-    }
-    const handleRestChange = () => {
-        const type = !rest ? 'info' : 'normal'
-        setRest(!rest)
-        setNewMovement([newMovement[0], type])
-    }
-    const handleScoreChange = (event) => {
-        setScore(event.target.value)
-    }
-    const handleCommentChange = (event) => {
-        setComment(event.target.value)
-    }
+    /** Toggle warnings */
+    const [warnings, setWarnings] = useState({
+        warningDate: false,
+        warningWorkout: false,
+        warningMovement: false
+    })
+    const toggleWarnings = () => {
+        const newWarnings = { ...warnings }
 
-    /** Cancel Last Action */
-    const cancelLastAction = () => {
-        if (stepWorkout) {
-            setStepWorkout(false)
-            setStepDate(true)
+        // Warning Date
+        const isActiveWarningDate = toggleWarningDate()
+        newWarnings.warningDate = isActiveWarningDate
+
+        // Warning Workout
+        if (!valueWorkout) {
+            newWarnings.warningWorkout = true
+        } else {
+            newWarnings.warningWorkout = false
         }
-        if (stepMovements && !stepVerify) {
-            if (isActiveComment) {
-                setIsActiveComment(false)
-                setComment('')
+
+        // Warning Movement
+        const isActiveWarningMovement = toggleWarningMovement()
+        newWarnings.warningMovement = isActiveWarningMovement
+
+        setWarnings(newWarnings)
+
+        // Return if warning is active
+        return Object.values(newWarnings).some(value => value === true)
+    }
+    const toggleWarningMovement = () => {
+        return arrayMovements.length === 0
+    }
+    const toggleWarningDate = () => {
+        return isInvalidDate(valueDate)
+    }
+
+    /** Cancel Movement */
+    const cancelMovement = () => {
+        const isActiveWarningMovement = toggleWarningMovement()
+
+        if (!isActiveWarningMovement) {
+            if (valueMovement[0] !== '') {
+                setValueMovement(['', ''])
+            } else if (arrayMovements.length !== 0) {
+                const newArrayMovements = [...arrayMovements]
+                newArrayMovements.pop()
+                setArrayMovements(newArrayMovements)
             }
-            else if (isActiveScore) {
-                setIsActiveScore(false)
-                setScore('')
-            }
-            else if (movements.length === 0) {
-                setStepMovements(false)
-                setStepWorkout(true)
-            }
-            else {
-                const newMovements = movements.slice(0, -1)
-                setMovements(newMovements)
-                if (newMovements.length === 0) {
-                    setMovementAdded(false)
-                }
-            }
-        }
-        if (stepVerify) {
-            setStepVerify(false)
+        } else {
+            const newWarnings = { ...warnings }
+            newWarnings.warningMovement = isActiveWarningMovement
+            setWarnings(newWarnings)
         }
     }
-
-    /** Add New Part of the Workout */
+    /** Add New Part */
     const addNewPart = () => {
-        // No actual workout
-        if (!actualWorkout) {
-            const temporaryWorkout = {
-                date: date,
-                workout: [
-                    {
-                        title: workout,
-                        movements: movements.map(movement => ({
-                            name: movement[0],
-                            type: movement[1]
-                        }))
-                    }
-                ]
+        const warningActive = toggleWarnings()
+
+        if (!warningActive) {
+
+            if (!workoutCreated) {
+                const temporaryWorkout = {
+                    date: valueDate,
+                    workout: [
+                        {
+                            id: 1,
+                            title: valueWorkout,
+                            movements: arrayMovements.map(movement => ({
+                                name: movement[0],
+                                type: movement[1]
+                            }))
+                        }
+                    ]
+                }
+                if (valueSubtitle !== '') temporaryWorkout.workout[0].subtitle = valueSubtitle
+                if (valueScore !== '') temporaryWorkout.workout[0].score = valueScore
+                if (valueComment !== '') temporaryWorkout.workout[0].comment = valueComment
+
+                setWorkoutCreated(temporaryWorkout)
+            } else {
+                const highestId = Math.max(...workoutCreated.workout.map(part => part.id))
+
+                const temporaryPart = {
+                    id: highestId + 1,
+                    title: valueWorkout,
+                    movements: arrayMovements.map(movement => ({
+                        name: movement[0],
+                        type: movement[1]
+                    }))
+                }
+                if (valueSubtitle !== '') temporaryPart.subtitle = valueSubtitle
+                if (valueScore !== '') temporaryPart.score = valueScore
+                if (valueComment !== '') temporaryPart.comment = valueComment
+
+                const temporaryWorkout = {...workoutCreated}
+                temporaryWorkout.workout.push(temporaryPart)
+
+                setWorkoutCreated(temporaryWorkout)
             }
-            if (subtitle !== '') temporaryWorkout.workout[0].subtitle = subtitle
-            if (score !== '') temporaryWorkout.workout[0].score = score
-            if (comment !== '') temporaryWorkout.workout[0].comment = comment
 
-            setActualWorkout(temporaryWorkout)
+            setValueWorkout('')
+            setValueSubtitle('')
+            setValueMovement(['', ''])
+            setArrayMovements([])
+            setValueScore('')
+            setValueComment('')
+            setLabelMovements(true)
         }
-        // Add New Part
-        else {
-            const temporaryPart = {
-                title: workout,
-                movements: movements.map(movement => ({
-                    name: movement[0],
-                    type: movement[1]
-                }))
+    }
+    /** Edit Part Workout */
+    const editWorkout = (part) => {
+        setIsEditing(true)
+        setIdEditing(part.id)
+
+        // Inputs Workout
+        setValueWorkout(part.title)
+
+        // Inputs Movements
+        const movements = [...part.movements]
+        const newArrayMovements = movements.map(movement => [movement.name, movement.type])
+        setArrayMovements(newArrayMovements)
+        setLabelMovements(true)
+
+        // Input Subtitle
+        if (part.subtitle) {
+            setValueSubtitle(part.subtitle)
+        } else {
+            setValueSubtitle('')
+        }
+        // Input Score
+        if (part.score) {
+            setValueScore(part.score)
+        } else {
+            setValueScore('')
+        }
+        // Input Comment
+        if (part.comment) {
+            setValueComment(part.comment)
+        } else {
+            setValueComment('')
+        }
+    }
+    /** Confirm Editing Workout */
+    const confirmEditingWorkout = (id) => {
+        const editingPart = {
+            id: id,
+            title: valueWorkout,
+            movements: arrayMovements.map(movement => ({
+                name: movement[0],
+                type: movement[1]
+            }))
+        }
+        if (valueSubtitle !== '') editingPart.subtitle = valueSubtitle
+        if (valueScore !== '') editingPart.score = valueScore
+        if (valueComment !== '') editingPart.comment = valueComment
+
+        const newWorkoutCreated = {...workoutCreated}
+        newWorkoutCreated.workout = newWorkoutCreated.workout.map(part => {
+            if (part.id === id) {
+                return editingPart
+            } else {
+                return part
             }
-            if (subtitle !== '') temporaryPart.subtitle = subtitle
-            if (score !== '') temporaryPart.score = score
-            if (comment !== '') temporaryPart.comment = comment
+        })
 
-            const temporaryWorkout = actualWorkout
-            temporaryWorkout.workout.push(temporaryPart)
-            setActualWorkout(temporaryWorkout)
-        }
-
-        // Reinitialize Inputs
-        setStepWorkout(true)
-        setStepMovements(false)
-        setStepVerify(false)
-        setWorkout('')
-        setSubtitle('')
-        setMovements([])
-        setScore('')
-        setComment('')
-        setRest(false)
-        setMovementAdded(false)
-        setIsActiveScore(false)
-        setIsActiveComment(false)
+        setWorkoutCreated(newWorkoutCreated)
+        setIsEditing(false)
+        setIdEditing(0)
+        setValueWorkout('')
+        setValueSubtitle('')
+        setValueMovement(['', ''])
+        setArrayMovements([])
+        setValueScore('')
+        setValueComment('')
+        setLabelMovements(true)
     }
 
     /** Save JSON */
     const saveJSON = () => {
         let newWorkout = null
 
-        if (!actualWorkout) {
-            newWorkout = {
-                date: date,
-                workout: [
-                    {
-                        title: workout,
-                        movements: movements.map(movement => ({
-                            name: movement[0],
-                            type: movement[1]
-                        }))
-                    }
-                ]
-            }
-            if (subtitle !== '') newWorkout.workout[0].subtitle = subtitle
-            if (score !== '') newWorkout.workout[0].score = score
-            if (comment !== '') newWorkout.workout[0].comment = comment
-        } else {
-            const temporaryPart = {
-                title: workout,
-                movements: movements.map(movement => ({
-                    name: movement[0],
-                    type: movement[1]
-                }))
-            }
-            if (subtitle !== '') temporaryPart.subtitle = subtitle
-            if (score !== '') temporaryPart.score = score
-            if (comment !== '') temporaryPart.comment = comment
+        if (!workoutCreated) {
+            const warningActive = toggleWarnings()
 
-            newWorkout = actualWorkout
-            newWorkout.workout.push(temporaryPart)
+            if (!warningActive) {
+                newWorkout = {
+                    date: valueDate,
+                    workout: [
+                        {
+                            id: 1,
+                            title: valueWorkout,
+                            movements: arrayMovements.map(movement => ({
+                                name: movement[0],
+                                type: movement[1]
+                            }))
+                        }
+                    ]
+                }
+                if (valueSubtitle !== '') newWorkout.workout[0].subtitle = valueSubtitle
+                if (valueScore !== '') newWorkout.workout[0].score = valueScore
+                if (valueComment !== '') newWorkout.workout[0].comment = valueComment
+            } else {
+                return
+            }
+        } else {
+            newWorkout = {...workoutCreated}
+
+            if (valueWorkout && arrayMovements.length > 0) {
+                const highestId = Math.max(newWorkout.workout.map(part => part.id))
+
+                const temporaryPart = {
+                    id: highestId + 1,
+                    title: valueWorkout,
+                    movements: arrayMovements.map(movement => ({
+                        name: movement[0],
+                        type: movement[1]
+                    }))
+                }
+                if (valueSubtitle !== '') temporaryPart.subtitle = valueSubtitle
+                if (valueScore !== '') temporaryPart.score = valueScore
+                if (valueComment !== '') temporaryPart.comment = valueComment
+
+                newWorkout.workout.push(temporaryPart)
+            }
+            if ((valueWorkout && arrayMovements.length === 0) || (!valueWorkout && arrayMovements.length > 0)) {
+                toggleWarnings()
+                return
+            }
+
+            if (!isInvalidDate(valueDate)) {
+                newWorkout.date = valueDate
+            } else {
+                const newWarnings = { ...warnings }
+                newWarnings.warningDate = true
+                setWarnings(newWarnings)
+                return
+            }
         }
 
         //** Fetch dataWorkouts from LocalStorage */
@@ -196,228 +322,190 @@ export const AddWorkoutView = ({ backHome }) => {
         }
 
         localStorage.setItem('dataWorkouts', JSON.stringify(existingData))
-    }
-
-    /** Toggle Parts Workout */
-    const toggleRow = (index) => {
-        setShowRow(prevState => ({
-            ...prevState,
-            [index]: !prevState[index]
-        }))
+        backHome('cards')
     }
 
     return (
         <>
-            <div className="AddWorkout">
-                <form className="AddWorkout-form">
+            <form className="AddWorkoutForm" onSubmit={(event) => event.preventDefault()}>
+
+                <div className="AddWorkoutForm-container">
                     <div className="line"/>
 
-                    {/* Input Date */}
-                    <div className='AddWorkout-inputContainer'>
-                        <Icon name='Calendar' size={ 15 } color="#4C5948" />
-                        <div className='AddWorkout-inputContainer-item'>
-                            <label htmlFor="inputDate" className={!stepDate ? 'dataSet': ''}>Date</label>
-                            {stepDate && <input type="date" name="inputDate" id="inputDate" className={ warningDate ? 'warning' : '' } onChange={() => handleDateChange(event)} />}
-                            {!stepDate && <p>{ date }</p>}
+                    {/* Fieldset Date */}
+                    <fieldset className="AddWorkoutForm-fieldset">
+                        <Icon name="Calendar" size={ 15 } color="#4C5948" />
+                        <div className="AddWorkoutForm-fieldset-input">
+                            <label htmlFor="date">Date</label>
+                            <input
+                                type="date"
+                                name="workout_date"
+                                id="date"
+                                className={warnings.warningDate ? 'warning' : ''}
+                                onChange={(event) => setValueDate(formatDateFR(event.target.value))}
+                            />
                         </div>
-                    </div>
+                    </fieldset>
 
                     {/* Workouts Parts */}
-                    <div className="AddWorkout-parts">
-                        {actualWorkout && actualWorkout.workout.map((workout, index) => (
-                            <div key={`${workout.title}-${index}`} className="AddWorkout-parts-container">
-                                <div className="AddWorkout-parts-header">
-                                    <p>{workout.title}</p>
-                                    <button type="button" onClick={() => toggleRow(index)}>
-                                        {!showRow[index] && <Icon name='ChevronDown' size={ 12 } color="#4C5948" />}
-                                        {showRow[index] && <Icon name='ChevronUp' size={ 12 } color="#4C5948" />}
-                                    </button>
-                                </div>
-                                {workout.subtitle && 
-                                    <div className="AddWorkout-parts-subtitle">
-                                        {workout.subtitle}
-                                    </div>
-                                }
-                                {showRow[index] &&
-                                    <div className="AddWorkout-parts-movements">
-                                        {workout.movements.map((movement) => (
-                                            <p className={movement.type === 'info' ? 'info' : ''}>
-                                                {movement.type === 'info' ? <span /> : null}
-                                                {movement.name}
-                                            </p>
-                                        ))}
-                                    </div>
-                                }
-                            </div>
+                    {workoutCreated && <div className="AddWorkoutForm-workouts">
+                        {workoutCreated.workout.map((workout, indexWorkout) => (
+                            <PartWorkout key={`partWorkout-${indexWorkout}`} workout={workout} editWorkout={editWorkout} id={idEditing} />
                         ))}
-                    </div>
-
-                    {/* Input Workout & Subtitle */}
-                    {!stepDate && <div className='AddWorkout-inputContainer'>
-                        <Icon name='Anvil' size={ 15 } color="#4C5948" />
-                        <div className='AddWorkout-inputContainer-item'>
-                            <label htmlFor="inputWorkoutTitle" className={!stepWorkout ? 'dataSet': ''}>Workout</label>
-                            {stepWorkout && <input type="text" name="inputWorkoutTitle" id="inputWorkoutTitle" className={ warningWorkout ? 'warning' : '' } value={ workout } placeholder="For Time 12'" onChange={() => handleWorkoutChange(event)} />}
-                            {stepMovements && <p>{ workout }</p>}
-                        </div>
-                        <div className='AddWorkout-inputContainer-item'>
-                            <label htmlFor="inputWorkoutSubtitle" className={!stepWorkout ? 'dataSet': ''}>Info</label>
-                            {stepWorkout && <input type="text" name="inputWorkoutSubtitle" id="inputWorkoutSubtitle" value={ subtitle } placeholder="3 Rounds" onChange={() => handleSubtitleChange(event)} />}
-                            {stepMovements && <p>{ subtitle }</p>}
-                        </div>
                     </div>}
 
-                    {/* Input Movement */}
-                    {stepMovements && <div className='AddWorkout-inputContainer'>
-                        <Icon name='Dumbbell' size={ 15 } color="#4C5948" />
-                        <div className='AddWorkout-inputContainer-item'>
-                            <label htmlFor="inputMovement" className={movementAdded || stepVerify ? 'dataSet': ''}>Movements</label>
-                            { movementAdded && movements.map((movement, index) =>  <p key={ index } className={ movement[1] === 'info' ? 'info' : '' } >{ movement[1] === 'info' ? <span /> : null }{ movement[0] }</p> ) }
-                            { !stepVerify && <>
-                                <input type="text" name="inputMovement" id="inputMovement" className={ warningMovement ? 'warning' : '' } value={ newMovement[0] } onChange={() => handleMovementChange(event)} />
-                                <div className='containerCheckbox'>
-                                    <input type="checkbox" name="checkboxRest" id="checkboxRest" value={ rest } onClick={() => handleRestChange()} />
-                                    <label htmlFor="checkboxRest">Rest</label>
-                                </div>
-                            </> }
+                    {/* Fieldset Workout & Subtitle */}
+                    <fieldset className="AddWorkoutForm-fieldset">
+                        <Icon name="Anvil" size={ 15 } color="#4C5948" />
+                        <div className="AddWorkoutForm-fieldset-input">
+                            <label htmlFor="workout">Workout</label>
+                            <input
+                                type="text"
+                                name="workout_title"
+                                id="workout"
+                                className={warnings.warningWorkout ? 'warning' : ''}
+                                placeholder="For Time 15'"
+                                value={valueWorkout}
+                                onChange={(event) => setValueWorkout(event.target.value)}
+                            />
                         </div>
-                    </div>}
-
-                    {/* Input Score */}
-                    {isActiveScore && <div className='AddWorkout-inputContainer'>
-                        <Icon name='Trophy' size={ 15 } color="#4C5948" />
-                        <div className='AddWorkout-inputContainer-item'>
-                            <label htmlFor="inputScore" className={stepVerify ? 'dataSet': ''}>Score</label>
-                            {!stepVerify && <input type="text" name="inputScore" value={ score } id="inputScore" onChange={() => handleScoreChange(event)} />}
-                            {stepVerify && <p>{ score }</p>}
+                        <div className="AddWorkoutForm-fieldset-input">
+                            <label htmlFor="subtitle">Subtitle</label>
+                            <input
+                                type="text"
+                                name="workout_subtitle"
+                                id="subtitle"
+                                placeholder="3 Rounds"
+                                value={valueSubtitle}
+                                onChange={(event) => setValueSubtitle(event.target.value)}
+                            />
                         </div>
-                    </div>}
+                    </fieldset>
 
-                    {/* Input Comment */}
-                    {isActiveComment && <div className='AddWorkout-inputContainer'>
-                        <Icon name='MessageSquareText' size={ 15 } color="#4C5948" />
-                        <div className='AddWorkout-inputContainer-item'>
-                            <label htmlFor="inputComment" className={stepVerify ? 'dataSet': ''}>Comment</label>
-                            {!stepVerify && <input type="text" name="inputComment" value={ comment } id="inputComment" onChange={() => handleCommentChange(event)} />}
-                            {stepVerify && <p>{ comment }</p>}
+                    {/* Fieldset Movement */}
+                    <fieldset className="AddWorkoutForm-fieldset movementsFieldset">
+                        <Icon name="Dumbbell" size={ 15 } color="#4C5948" />
+                        <div className="AddWorkoutForm-fieldset-input">
+                            <label className={!isEmptyArray(arrayMovements) ? 'left': ''} htmlFor="movements">{!isEmptyArray(arrayMovements) ? "Movements": !labelMovements ? "Information" : "Movement"}</label>
+                            {!isEmptyArray(arrayMovements) && <ul className="movementsList">
+                                {arrayMovements.map((movement, index) => (
+                                    <li key={`movement-${index}`} className={movement[1] === 'info' ? 'info' : '' }>{movement[1] === 'info' ? <span /> : null }{movement[0]}</li>
+                                ))}
+                            </ul>}
+                            {!isEmptyArray(arrayMovements) && <label className='secondaryLabel' htmlFor="movements">{!labelMovements ? "Information" : "Movement"}</label>}
+                            <input
+                                type="text"
+                                name="workout_movements"
+                                id="movements"
+                                className={warnings.warningMovement ? 'warning' : ''}
+                                placeholder={labelMovements ? "15 Toes to Bar" : "2' Rest"}
+                                value={valueMovement[0]}
+                                onChange={(event) => setValueMovement([event.target.value, labelMovements ? 'normal' : 'info'])}
+                            />
                         </div>
-                    </div>}
+                    </fieldset>
 
-                </form>
-            </div>
-
-            <div className="AddWorkout-buttons">
-                {!stepVerify && <div className="AddWorkout-buttons-row">
-                    { stepMovements && <>
-                        <button type="button" className='AddWorkout-buttons-item secondary'
-                            onClick={() => { setIsActiveScore(!isActiveScore); setScore(''); }}
-                        >
-                            <Icon name='Trophy' size={ 20 } color="#2C2C2C" />
-                        </button>
-                        <button type="button" className='AddWorkout-buttons-item secondary'
-                            onClick={() => { setIsActiveComment(!isActiveComment); setComment(''); }}
-                        >
-                            <Icon name='MessageSquareText' size={ 20 } color="#2C2C2C" />
-                        </button>
-                    </> }
-                    {!stepMovements && !stepDate  && <button type="button" className='AddWorkout-buttons-item secondary'
-                        onClick={() => cancelLastAction()}
-                    >
-                        <Icon name='Undo2' size={ 20 } color="#2C2C2C" />
-                    </button>}
-                    <button
-                        className='AddWorkout-buttons-item primary'
-                        type='button'
-                        onClick={() => {
-                            if (stepDate) {
-                                if (date !== '') {
-                                    setStepDate(false)
-                                    setStepWorkout(true)
-                                    if (warningDate) {
-                                        setWarningDate(false)
-                                    }
-                                } else {
-                                    setWarningDate(true)
-                                }
-                            }
-                            if (stepWorkout) {
-                                if (workout !== '') {
-                                    setStepWorkout(false)
-                                    setStepMovements(true)
-                                    if (warningWorkout) {
-                                        setWarningWorkout(false)
-                                    }
-                                }
-                                else {
-                                    setWarningWorkout(true)
-                                }
-                            }
-                            if (stepMovements) {
-                                if (newMovement[0] !== '') {
-                                    setMovements([...movements, newMovement])
-                                    setMovementAdded(true)
-                                    setNewMovement(['', ''])
-                                    if (warningMovement) {
-                                        setWarningMovement(false)
-                                    }
-                                } else {
-                                    setWarningMovement(true)
-                                }
-                            }
-                        }}
-                    >
-                        { !stepMovements ? 'Add' : '+'}
-                        { stepDate && ' Workout' }
-                        { stepWorkout && ' Movements' }
-                        { stepMovements && ' Movement' }
-                    </button>
-                </div>}
-                {stepMovements && <div className="AddWorkout-buttons-row">
-                    <button type="button" className='AddWorkout-buttons-item secondary'
-                        onClick={() => cancelLastAction()}
-                    >
-                        <Icon name='Undo2' size={ 20 } color="#2C2C2C" />
-                    </button>
-                    {stepVerify && <button type="button" className='AddWorkout-buttons-item secondary'
-                        onClick={() => addNewPart()}
-                    >
-                        <Icon name='CopyPlus' size={ 20 } color="#2C2C2C" />
-                    </button>}
-                    <button
-                            className='AddWorkout-buttons-item save'
-                            type='button'
+                    <div className="AddWorkoutForm-buttonContainer">
+                        <button
+                            type="button"
                             onClick={() => {
-                                // Save Workout
-                                if (stepVerify) {
-                                    saveJSON()
-                                    backHome('cards')
-                                }
-                                // Check Workout
-                                else {
-                                    // Movements OK
-                                    if (movements.length > 0) {
-                                        setStepVerify(true)
-                                        if (score === '') {
-                                            setIsActiveScore(false)
-                                        }
-                                        if (comment === '') {
-                                            setIsActiveComment(false)
-                                        }
-                                        if (warningMovement) {
-                                            setWarningMovement(false)
-                                        }
-                                    }
-                                    // No Movements
-                                    else {
-                                        setWarningMovement(true)
-                                    }
+                                setLabelMovements(!labelMovements)
+                                setValueMovement([valueMovement[0], !labelMovements ? 'normal' : 'info'])
+                            }}
+                        >
+                            <Icon name="ArrowLeftRight" size={ 15 } color="#4C5948" />
+                            {labelMovements ? "Information" : "Movement"}
+                        </button>
+                        <button
+                            type="button"
+                            className="svgOnly"
+                            onClick={() => cancelMovement()}
+                        >
+                            <Icon name="Minus" size={ 15 } color="#4C5948" />
+                        </button>
+                        <button
+                            type="button"
+                            className="svgOnly"
+                            onClick={() => {
+                                if (valueMovement[0] !== '') {
+                                    setArrayMovements([...arrayMovements, valueMovement])
+                                    setValueMovement(['', ''])
+                                } else {
+                                    const newWarnings = { ...warnings }
+                                    newWarnings.warningMovement = true
+                                    setWarnings(newWarnings)
                                 }
                             }}
                         >
-                            { !stepVerify ? "Check" : "Save" } Workout
-                    </button>
-                </div>}
-            </div>
+                            <Icon name="Plus" size={ 15 } color="#4C5948" />
+                        </button>
+                    </div>
+
+                    {/* Input Score */}
+                    <fieldset className="AddWorkoutForm-fieldset">
+                        <Icon name="Trophy" size={ 15 } color="#4C5948" />
+                        <div className="AddWorkoutForm-fieldset-input">
+                            <label htmlFor="score">Score</label>
+                            <input
+                                type="text"
+                                name="workout_score"
+                                id="score"
+                                placeholder="14'50 | 150 Reps"
+                                value={valueScore}
+                                onChange={(event) => setValueScore(event.target.value)}
+                            />
+                        </div>
+                    </fieldset>
+
+                    {/* Input Comment */}
+                    <fieldset className="AddWorkoutForm-fieldset">
+                        <Icon name="MessageSquareText" size={ 15 } color="#4C5948" />
+                        <div className="AddWorkoutForm-fieldset-input">
+                            <label htmlFor="comment">Comment</label>
+                            <input
+                                type="text"
+                                name="workout_comment"
+                                id="comment"
+                                placeholder="Sooo hard..."
+                                value={valueComment}
+                                onChange={(event) => setValueComment(event.target.value)}
+                            />
+                        </div>
+                    </fieldset>
+
+                    {/* Add New Part */}
+                    <div className="AddWorkoutForm-buttonContainer">
+                        {!isEditing
+                            ? <button
+                                type="button"
+                                onClick={() => addNewPart()}
+                            >
+                                <Icon name="CopyPlus" size={ 15 } color="#4C5948" />
+                                Add New Part
+                            </button>
+                            : <button
+                                type="button"
+                                onClick={() => confirmEditingWorkout(idEditing)}
+                            >
+                                <Icon name="Check" size={ 15 } color="#4C5948" />
+                                Confirm Editing Workout
+                            </button>
+                        }
+                    </div>
+                </div>
+            </form>
+
+            {/* Submit Button */}
+            {!isEditing &&
+                <button
+                    type="submit"
+                    className="AddWorkoutForm-buttonSubmit"
+                    onClick={() => saveJSON()}
+                >
+                    <Icon name="Save" size={ 16 } color="#2C2C2C" />
+                    Save Workout
+                </button>
+            }
         </>
     )
 }

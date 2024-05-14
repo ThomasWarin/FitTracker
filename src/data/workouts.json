@@ -1,5 +1,75 @@
 [
     {
+        "date": "13/05/24",
+        "workout": [
+            {
+                "title": "Max Clean & Jerk",
+                "movements": [
+                    {
+                        "name": "Find 1RM Clean & Jerk",
+                        "type": "normal"
+                    }
+                ],
+                "score": "92 kg"
+            }
+        ]
+    },
+    {
+        "date": "10/05/24",
+        "workout": [
+            {
+                "title": "Max Deadlift",
+                "movements": [
+                    {
+                        "name": "Find 1RM Deadlift",
+                        "type": "normal"
+                    }
+                ],
+                "score": "135 kg"
+            }
+        ]
+    },
+    {
+        "date": "07/05/24",
+        "workout": [
+            {
+                "title": "Max Strict Press",
+                "movements": [
+                    {
+                        "name": "Find 1RM Strict Press",
+                        "type": "normal"
+                    }
+                ],
+                "score": "57 kg"
+            },
+            {
+                "title": "Max Push Press",
+                "movements": [
+                    {
+                        "name": "Find 1RM Push Press",
+                        "type": "normal"
+                    }
+                ],
+                "score": "80 kg"
+            }
+        ]
+    },
+    {
+        "date": "06/05/24",
+        "workout": [
+            {
+                "title": "Max Back Squat",
+                "movements": [
+                    {
+                        "name": "Find 1RM Back Squat",
+                        "type": "normal"
+                    }
+                ],
+                "score": "105 kg"
+            }
+        ]
+    },
+    {
         "date": "03/05/24",
         "workout": [
             {
