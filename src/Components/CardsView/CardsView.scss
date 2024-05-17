@@ -6,6 +6,14 @@
     position: relative;
     padding: 20px;
 
+    .line {
+        position: absolute;
+        top: 34px;
+        width: 1px;
+        height: calc(100% - 14px - 40px);
+        background-color: $primary-color-300;
+    }
+
     &:not(:last-child) {
         margin-bottom: $primary-gap;
     }
@@ -21,9 +29,18 @@
         z-index: -1;
     }
 
+    &-blockContainer:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
     &-element {
         display: flex;
         align-items: center;
+        text-transform: uppercase;
+
+        &:not(.date):not(:last-child) {
+            margin-bottom: 20px;
+        }
 
         &.date p {
             font-size: 14px;
@@ -33,10 +50,16 @@
         }
 
         &.title {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            height: 18px;
+            gap: 12px;
+            margin-left: -12px;
+
+            svg {
+                position: relative;
+                height: 25px;
+                width: 25px;
+                padding: 5px;
+                background-color: $primary-color-100;
+            }
 
             .workoutTitle {
                 font-size: 18px;
@@ -44,72 +67,50 @@
                 text-transform: uppercase;
             }
 
-            .score {
+            &.score {
                 font-size: 14px;
+                font-weight: 700;
+            }
+
+            &.comment {
+                font-size: 14px;
+                font-style: italic;
+                color: $primary-color-500;
             }
         }
 
-        &.comment {
-            display: flex;
-            align-items: center;
-            gap: 20px;
+        &.subtitle {
+            margin-top: -20px;
+            padding-left: 25px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        &.movements {
+            margin-top: 20px;
+            flex-direction: column;
+            align-items: baseline;
+            padding-left: 25px;
             font-size: 14px;
-            font-style: italic;
-            color: $primary-color-500;
-        }
+            color: $text-color;
 
-        &.workoutMovements {
-            position: relative;
-
-            .line {
-                position: absolute;
-                width: 1px;
-                height: 100%;
-                background-color: $primary-color-300;
-                margin-left: 3.5px;
-                margin-right: 23.5px;
+            .movement:not(:last-of-type) {
+                margin-bottom: 2px;
             }
 
-            .movements {
-                padding-left: 28px;
-                font-size: 14px;
+            .info {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                text-transform: uppercase;
+                color: $primary-color-500;
 
-                .movement:not(:last-of-type) {
-                    margin-bottom: 2px;
-                }
-
-                .info {
-                    display: flex;
-                    align-items: center;
-                    gap: 15px;
-                    font-size: 12px;
-                    text-transform: uppercase;
-                    color: $primary-color-500;
-
-                    span {
-                        display: inline-block;
-                        height: 1px;
-                        width: 50px;
-                        background-color: $primary-color-300;
-                    }
-                }
-
-                .space {
-                    height: 20px;
-                }
-
-                .subtitle {
-                    margin-top: 5px;
-                    font-weight: 700;
-                    text-transform: uppercase;
+                span {
+                    height: 1px;
+                    width: 30px;
+                    background-color: $primary-color-300;
                 }
             }
-        }
-
-        &.space {
-            margin-left: 3.5px;
-            height: 20px;
-            border-left: 1px solid $primary-color-300;
         }
     }
 }
