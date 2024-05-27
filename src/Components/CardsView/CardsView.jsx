@@ -16,7 +16,7 @@ const Modal = ({description, functionYes, closeModal, saveJSON}) => {
     )
 } 
 
-export const CardsView = ({ workouts }) => {
+export const CardsView = ({ workouts, onEditWorkout }) => {
     const [idOption, setIdOption] = useState(0)
     const [workoutsList, setWorkoutsList] = useState(workouts)
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -49,7 +49,7 @@ export const CardsView = ({ workouts }) => {
                         </button>
                         <button
                             type="button"
-                            onClick={() => console.log('edit')}
+                            onClick={() => onEditWorkout(workoutsList.find(obj => obj.id === date.id))}
                         >
                             <Icon name="PenLine" size={12} color="#4C5948" />
                         </button>

@@ -2,8 +2,8 @@
 import "./AddWorkoutView.scss"
 import { Icon } from "../SvgComponents/SvgComponents"
 
-import { useState } from "react"
-import { formatDateFR } from "../../utils/formatDate"
+import { useEffect, useState } from "react"
+import { formatDateFR, formatDateISO } from "../../utils/formatDate"
 import { isEmptyArray } from "../../utils/isEmptyArray"
 import { isInvalidDate } from "../../utils/isInvalidDate"
 
@@ -59,10 +59,12 @@ const PartWorkout = ({ workout, editWorkout, deleteWorkout, id }) => {
     )
 }
 
-export const AddWorkoutView = ({ backHome }) => {
+export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit }) => {
     const [labelMovements, setLabelMovements] = useState(true)
+    console.log(initWorkoutToEdit)
 
     const [valueDate, setValueDate] = useState('')
+    const [valueDateISO, setValueDateISO] = useState('')
     const [valueWorkout, setValueWorkout] = useState('')
     const [valueSubtitle, setValueSubtitle] = useState('')
     const [valueMovement, setValueMovement] = useState(['', ''])
@@ -73,6 +75,8 @@ export const AddWorkoutView = ({ backHome }) => {
     const [workoutCreated, setWorkoutCreated] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
     const [idEditing, setIdEditing] = useState(0)
+
+    const [isEditingFromCards, setIsEditingFromCards] = useState(false)
 
     /** Toggle warnings */
     const [warnings, setWarnings] = useState({
@@ -324,22 +328,44 @@ export const AddWorkoutView = ({ backHome }) => {
         }
 
         //** Fetch dataWorkouts from LocalStorage */
-        const existingData = JSON.parse(localStorage.getItem('dataWorkouts'))
-        const isDateExist = existingData.find((item) => item.date === newWorkout.date) !== undefined
+        let existingData = JSON.parse(localStorage.getItem('dataWorkouts'))
 
-        if (isDateExist) {
-            existingData.forEach((item) => {
-                if (item.date === newWorkout.date) {
-                    item.workout.push(...newWorkout.workout);
+        if (isEditingFromCards) {
+            existingData = existingData.map((item) => {
+                if (item.id === workoutCreated.id) {
+                    return newWorkout
+                } else {
+                    return item
                 }
             })
+            initWorkoutToEdit(null)
         } else {
-            existingData.unshift(newWorkout)
+            const isDateExist = existingData.find((item) => item.date === newWorkout.date) !== undefined
+
+            if (isDateExist) {
+                existingData.forEach((item) => {
+                    if (item.date === newWorkout.date) {
+                        item.workout.push(...newWorkout.workout);
+                    }
+                })
+            } else {
+                existingData.unshift(newWorkout)
+            }
         }
 
         localStorage.setItem('dataWorkouts', JSON.stringify(existingData))
         backHome('cards')
     }
+
+    useEffect(() => {
+        if (workoutToEdit !== null) {
+            const dateWorkout = workoutToEdit.date
+            setIsEditingFromCards(true)
+            setValueDate(dateWorkout)
+            setValueDateISO(formatDateISO(dateWorkout))
+            setWorkoutCreated(workoutToEdit)
+        }
+    }, [])
 
     return (
         <>
@@ -358,7 +384,11 @@ export const AddWorkoutView = ({ backHome }) => {
                                 name="workout_date"
                                 id="date"
                                 className={warnings.warningDate ? 'warning' : ''}
-                                onChange={(event) => setValueDate(formatDateFR(event.target.value))}
+                                value={valueDateISO}
+                                onChange={(event) => {
+                                    setValueDate(formatDateFR(event.target.value))
+                                    setValueDateISO(event.target.value)
+                                }}
                             />
                         </div>
                     </fieldset>

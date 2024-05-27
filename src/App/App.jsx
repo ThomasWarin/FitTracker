@@ -25,6 +25,12 @@ function App() {
         setCurrentView(view)
     }
 
+    const [workoutToEdit, setWorkoutToEdit] = useState(null);
+    const handleEditWorkout = (workout) => {
+        setWorkoutToEdit(workout)
+        handleViewChange('addWorkout')
+    }
+
     return (
         <div className='App'>
             <header className='Header'>
@@ -53,15 +59,19 @@ function App() {
 
             <main className='Main'>
 
-            { currentView === 'cards' && <CardsView workouts={ dataWorkouts } /> }
-            { currentView === 'addWorkout' && <AddWorkoutView backHome={ handleViewChange } /> }
+            { currentView === 'cards' && <CardsView workouts={ dataWorkouts } onEditWorkout={handleEditWorkout} /> }
+            { currentView === 'addWorkout' && <AddWorkoutView backHome={ handleViewChange } workoutToEdit={ workoutToEdit } initWorkoutToEdit={ setWorkoutToEdit } /> }
 
             {isOpenModal && <div className="overlay">
                 <div className="cancelModal">
                     <p>Cancel workout creation?</p>
                     <div className="cancelModal-row">
                         <button className='no' onClick={() => setIsOpenModal(false)}>No</button>
-                        <button className='yes' onClick={() => { handleViewChange('cards'); setIsOpenModal(false); }}>Yes</button>
+                        <button className='yes' onClick={() => {
+                            handleViewChange('cards');
+                            setIsOpenModal(false);
+                            setWorkoutToEdit(null)
+                        }}>Yes</button>
                     </div>
                 </div>
             </div>}
