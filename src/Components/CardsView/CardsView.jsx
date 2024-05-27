@@ -2,16 +2,58 @@
 import './CardsView.scss'
 
 import { Icon } from "../SvgComponents/SvgComponents"
+import { useState } from 'react'
+
+const Modal = ({description, functionYes, closeModal, saveJSON}) => {
+    return (
+        <div className="cancelModal">
+            <p>{description}</p>
+            <div className="cancelModal-row">
+                <button className='no' onClick={closeModal}>No</button>
+                <button className='yes' onClick={() => { functionYes(); closeModal(); saveJSON() }}>Yes</button>
+            </div>
+        </div>
+    )
+} 
 
 export const CardsView = ({ workouts }) => {
+    const [idOption, setIdOption] = useState(0)
+    const [workoutsList, setWorkoutsList] = useState(workouts)
+    const [isOpenModal, setIsOpenModal] = useState(false)
 
     return (
         <>
-        { workouts.map((date) => (
+        { workoutsList.map((date) => (
             <div className="Card" key={date.date}>
                 <div className="line"/>
                 <div className="Card-element date">
                     <p>{date.date}</p>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            if (idOption !== date.id) {
+                                setIdOption(date.id)
+                            } else {
+                                setIdOption(0)
+                            }
+                        }}
+                    >
+                        <Icon name="EllipsisVertical" size={12} color="#4C5948" />
+                    </button>
+                    {idOption === date.id && <div className='options'>
+                        <button
+                            type="button"
+                            onClick={() => setIsOpenModal(true)}
+                        >
+                            <Icon name="Trash2" size={12} color="#4C5948" />
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => console.log('edit')}
+                        >
+                            <Icon name="PenLine" size={12} color="#4C5948" />
+                        </button>
+                    </div>}
                 </div>
                 { date.workout.map((workout, workoutIndex) => (
                     <div key={`${date.date}-${workoutIndex}`} className='Card-blockContainer' >
@@ -46,6 +88,17 @@ export const CardsView = ({ workouts }) => {
                 )) }
             </div>
         )) }
+
+        {isOpenModal &&
+            <div className="overlay">
+                <Modal
+                    description="Delete this card?"
+                    functionYes={() => setWorkoutsList(workoutsList.filter(obj => obj.id !== idOption))}
+                    closeModal={() => setIsOpenModal(false)}
+                    saveJSON={() => localStorage.setItem('dataWorkouts', JSON.stringify(workoutsList.filter(obj => obj.id !== idOption)))}
+                />
+            </div>
+        }
         </>
     )
 }
