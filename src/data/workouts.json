@@ -4,6 +4,7 @@
         "workout": [
             {
                 "title": "Wod Hero: Badger",
+                "subtitle": "3 Rounds",
                 "movements": [
                     {
                         "name": "30 Squat Cleans @43kg",
@@ -17,7 +18,8 @@
                         "name": "800m Run",
                         "type": "normal"
                     }
-                ]
+                ],
+                "score": "2 Rounds + 18 Reps"
             }
         ]
     },
