@@ -13,7 +13,7 @@ export const CardsView = ({ workouts }) => {
                 <div className="Card-element date">
                     <p>{date.date}</p>
                 </div>
-                { date.workout.map((workout, workoutIndex, workouts) => (
+                { date.workout.map((workout, workoutIndex) => (
                     <div key={`${date.date}-${workoutIndex}`} className='Card-blockContainer' >
                         <div className="Card-element title">
                             <Icon name="Dumbbell" size={ 15 } color="#4C5948" />

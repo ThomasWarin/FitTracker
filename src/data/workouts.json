@@ -1,5 +1,180 @@
 [
     {
+        "date": "27/05/24",
+        "workout": [
+            {
+                "title": "Wod Hero: Badger",
+                "movements": [
+                    {
+                        "name": "30 Squat Cleans @43kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "30 Pull-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "800m Run",
+                        "type": "normal"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "date": "24/05/24",
+        "workout": [
+            {
+                "title": "EMOM 8' x 3",
+                "movements": [
+                    {
+                        "name": "55 Double-Unders",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "15 Sumo Deadlifts High-Pull",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "25 Cal Row",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "15 Burpees Over The Bar",
+                        "type": "normal"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "date": "22/05/24",
+        "workout": [
+            {
+                "title": "AMRAP 18'",
+                "movements": [
+                    {
+                        "name": "10 High Box Jumps",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "10 Dual DB Snatches @17.5kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "10 Handstand Push-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "10 Dual DB Deadlifts @17.5kg",
+                        "type": "normal"
+                    }
+                ],
+                "score": "5 Rounds + 6"
+            },
+            {
+                "title": "Weightlifting",
+                "subtitle": "EMOM 30' x 16",
+                "movements": [
+                    {
+                        "name": "1: 1 Power Snatch @60kg",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "2: 1 Squat Snacth @60kg",
+                        "type": "normal"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "date": "21/05/24",
+        "workout": [
+            {
+                "title": "For Time 15'",
+                "subtitle": "3 Rounds",
+                "movements": [
+                    {
+                        "name": "75 Double-Unders",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "15 Toes To Bar",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "7 Front Squats @65kg",
+                        "type": "normal"
+                    }
+                ],
+                "score": "12'38"
+            },
+            {
+                "title": "GYM - Part 1",
+                "subtitle": "EMOM 12'",
+                "movements": [
+                    {
+                        "name": "1: 3 Strict Pull-Ups",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "2: 15 Banded Biceps Curl",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "3: 12 Banded Bar Row",
+                        "type": "normal"
+                    }
+                ]
+            },
+            {
+                "title": "GYM - Part 2",
+                "subtitle": "EMOM 12'",
+                "movements": [
+                    {
+                        "name": "1: 12 Sumo Deadlifts High-Pull",
+                        "type": "normal"
+                    },
+                    {
+                        "name": "2: 2x 5 Pull-Ups",
+                        "type": "normal"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "date": "17/05/24",
+        "workout": [
+            {
+                "title": "Max Front Squat",
+                "movements": [
+                    {
+                        "name": "Find 1RM Front Squat",
+                        "type": "normal"
+                    }
+                ],
+                "score": "91 kg"
+            }
+        ]
+    },
+    {
+        "date": "15/05/24",
+        "workout": [
+            {
+                "title": "Max Snatch",
+                "movements": [
+                    {
+                        "name": "Find 1RM Snatch",
+                        "type": "normal"
+                    }
+                ],
+                "score": "80 kg"
+            }
+        ]
+    },
+    {
         "date": "13/05/24",
         "workout": [
             {
