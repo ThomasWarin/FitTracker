@@ -61,7 +61,6 @@ const PartWorkout = ({ workout, editWorkout, deleteWorkout, id }) => {
 
 export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit }) => {
     const [labelMovements, setLabelMovements] = useState(true)
-    console.log(initWorkoutToEdit)
 
     const [valueDate, setValueDate] = useState('')
     const [valueDateISO, setValueDateISO] = useState('')
