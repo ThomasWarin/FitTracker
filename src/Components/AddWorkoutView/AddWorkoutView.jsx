@@ -59,7 +59,7 @@ const PartWorkout = ({ workout, editWorkout, deleteWorkout, id }) => {
     )
 }
 
-export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit }) => {
+export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit, maxId, setMaxId }) => {
     const [labelMovements, setLabelMovements] = useState(true)
 
     const [valueDate, setValueDate] = useState('')
@@ -139,6 +139,7 @@ export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit }) =
 
             if (!workoutCreated) {
                 const temporaryWorkout = {
+                    id: maxId + 1,
                     date: valueDate,
                     workout: [
                         {
@@ -273,6 +274,7 @@ export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit }) =
 
             if (!warningActive) {
                 newWorkout = {
+                    id: maxId + 1,
                     date: valueDate,
                     workout: [
                         {
@@ -295,7 +297,7 @@ export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit }) =
             newWorkout = {...workoutCreated}
 
             if (valueWorkout && arrayMovements.length > 0) {
-                const highestId = Math.max(newWorkout.workout.map(part => part.id))
+                const highestId = Math.max(...newWorkout.workout.map(part => part.id))
 
                 const temporaryPart = {
                     id: highestId + 1,
@@ -344,11 +346,19 @@ export const AddWorkoutView = ({ backHome, workoutToEdit, initWorkoutToEdit }) =
             if (isDateExist) {
                 existingData.forEach((item) => {
                     if (item.date === newWorkout.date) {
+                        const maxIdExisting = Math.max(...item.workout.map(part => part.id))
+                        const addedWorkout = newWorkout.workout
+
+                        addedWorkout.forEach(workout => {
+                            workout.id += maxIdExisting
+                        })
+
                         item.workout.push(...newWorkout.workout);
                     }
                 })
             } else {
                 existingData.unshift(newWorkout)
+                setMaxId(maxId + 1)
             }
         }
 

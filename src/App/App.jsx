@@ -18,6 +18,7 @@ function App() {
         localStorage.setItem("dataWorkouts", jsonString)
         dataWorkouts = workouts
     }
+    const [maxId, setMaxId] = useState(Math.max(...dataWorkouts.map(item => item.id)))
 
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [currentView, setCurrentView] = useState('cards')
@@ -60,7 +61,14 @@ function App() {
             <main className='Main'>
 
             { currentView === 'cards' && <CardsView workouts={ dataWorkouts } onEditWorkout={handleEditWorkout} /> }
-            { currentView === 'addWorkout' && <AddWorkoutView backHome={ handleViewChange } workoutToEdit={ workoutToEdit } initWorkoutToEdit={ setWorkoutToEdit } /> }
+            { currentView === 'addWorkout'
+                && <AddWorkoutView
+                    backHome={ handleViewChange }
+                    workoutToEdit={ workoutToEdit }
+                    initWorkoutToEdit={ setWorkoutToEdit }
+                    maxId={ maxId }
+                    setMaxId={ setMaxId } />
+            }
 
             {isOpenModal && <div className="overlay">
                 <div className="cancelModal">
