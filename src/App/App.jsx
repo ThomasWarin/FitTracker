@@ -7,6 +7,7 @@ import { useState } from 'react'
 import workouts from '../data/workouts.json'
 import { CardsView } from '../Components/CardsView/CardsView'
 import { AddWorkoutView } from '../Components/AddWorkoutView/AddWorkoutView'
+import { RecordsView } from '../Components/RecordsView/RecordsView'
 
 import { Icon } from '../Components/SvgComponents/SvgComponents'
 
@@ -39,20 +40,30 @@ function App() {
                     type="button"
                     className='Header-button'
                     onClick={() => {
-                        currentView === 'cards' ? handleViewChange('addWorkout') : setIsOpenModal(true)
+                        currentView === 'cards'
+                            ? handleViewChange('addWorkout')
+                            : currentView === 'addWorkout'
+                                // Back from AddWorkout View
+                                ? setIsOpenModal(true)
+                                // Back from Records View
+                                : handleViewChange('cards')
                     }}
                 >
                     <p>
                         {currentView === 'cards' && <Icon name='Plus' size={ 16 } color="#2C2C2C" />}
-                        {currentView === 'addWorkout' && <Icon name='ChevronLeft' size={ 16 } color="#2C2C2C" />}
-                        { currentView === 'cards' ? "Workout" : "Back" }
+                        {currentView !== 'cards' && <Icon name='ChevronLeft' size={ 16 } color="#2C2C2C" />}
+                        {currentView === 'cards' ? "Workout" : "Back"}
                     </p>
                 </button>
                 { currentView === 'cards' && <>
-                    <button type="button" className='Header-button secondary'>
+                    <button
+                        type="button"
+                        className='Header-button secondary records'
+                        onClick={() => handleViewChange('records') }
+                    >
                         <Icon name='Trophy' size={ 24 } color="#4C5948" />
                     </button>
-                    <button type="button" className='Header-button secondary'>
+                    <button type="button" className='Header-button secondary filter'>
                         <Icon name='SlidersHorizontal' size={ 24 } color="#4C5948" />
                     </button>
                 </> }
@@ -69,6 +80,7 @@ function App() {
                     maxId={ maxId }
                     setMaxId={ setMaxId } />
             }
+            { currentView === 'records' && <RecordsView /> }
 
             {isOpenModal && <div className="overlay">
                 <div className="cancelModal">
