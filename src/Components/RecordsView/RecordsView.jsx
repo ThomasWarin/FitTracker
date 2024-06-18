@@ -25,6 +25,9 @@ export const RecordsView = () => {
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                         />
+                        {search && <button type="button" className='deleteSearch' onClick={() => setSearch('')}>
+                            <Icon name="X" size={ 15 } color="#4C5948" />
+                        </button>}
                     </div>
                 </div>
 
