@@ -4,73 +4,90 @@
         "subcategory": [
             {
                 "name": "Clean & Jerk",
-                "weight": 92,
+                "type": "weight",
+                "value": 92,
                 "movements": [
                     {
                         "name": "Hang Power Clean",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Hang Squat Clean",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Muscle Clean",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Power Clean",
-                        "weight": 92
+                        "type": "weight",
+                        "value": 92
                     },
                     {
                         "name": "Squat Clean",
-                        "weight": 85
+                        "type": "weight",
+                        "value": 85
                     },
                     {
                         "name": "Strict Press",
-                        "weight": 57
+                        "type": "weight",
+                        "value": 57
                     },
                     {
                         "name": "Push Press",
-                        "weight": 80
+                        "type": "weight",
+                        "value": 80
                     },
                     {
                         "name": "Push Jerk",
-                        "weight": 92
+                        "type": "weight",
+                        "value": 92
                     },
                     {
                         "name": "Split Jerk",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     }
                 ]
             },
             {
                 "name": "Snatch",
-                "weight": 80,
+                "type": "weight",
+                "value": 80,
                 "movements": [
                     {
                         "name": "Hang Power Snatch",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Hang Squat Snatch",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Muscle Snatch",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Power Snatch",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Squat Snatch",
-                        "weight": 80
+                        "type": "weight",
+                        "value": 80
                     },
                     {
                         "name": "Snatch Balance",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     }
                 ]
             }
@@ -81,51 +98,62 @@
         "subcategory": [
             {
                 "name": "Squat",
-                "weight": 105,
+                "type": "weight",
+                "value": 105,
                 "movements": [
                     {
                         "name": "Back Squat",
-                        "weight": 105
+                        "type": "weight",
+                        "value": 105
                     },
                     {
                         "name": "Front Squat",
-                        "weight": 91
+                        "type": "weight",
+                        "value": 91
                     },
                     {
                         "name": "Overhead Squat",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     }
                 ]
             },
             {
                 "name": "Bench Press",
-                "weight": 0,
+                "type": "weight",
+                "value": 0,
                 "movements": [
                     {
                         "name": "Dumbbell Press",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Seated Press",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Seated Dumbbell Press",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     }
                 ]
             },
             {
                 "name": "Deadlift",
-                "weight": 135,
+                "type": "weight",
+                "value": 135,
                 "movements": [
                     {
                         "name": "Romanian Deadlift",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Sumo Deadlift",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     }
                 ]
             }
@@ -136,105 +164,128 @@
         "subcategory": [
             {
                 "name": "Bar",
-                "reps": 0,
+                "type": "none",
                 "movements": [
                     {
                         "name": "Pull-Up",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Chest-to-Bar",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Muscle-Up",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Ring Muscle-Up",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Toes-to-Bar",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Strict Pull-Up",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Strict Chest-to-Bar",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Strict Muscle-Up",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Strict Ring Muscle-Up",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Weighted Pull-Up",
-                        "weight": 7.5
+                        "type": "weight",
+                        "value": 7.5
                     },
                     {
                         "name": "Weighted Chest-to-Bar",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Weighted Muscle-Up",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     },
                     {
                         "name": "Weighted Ring Muscle-Up",
-                        "weight": 0
+                        "type": "weight",
+                        "value": 0
                     }
                 ]
             },
             {
                 "name": "Others",
-                "reps": 0,
+                "type": "none",
                 "movements": [
                     {
                         "name": "Double-Unders",
-                        "reps": 100
+                        "type": "reps",
+                        "value": 100
                     },
                     {
                         "name": "Triple-Unders",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Handstand Hold",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Handstand Push-Ups",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Strict Handstand Push-Ups",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Handstand Walk",
-                        "distance": 5
+                        "type": "distance",
+                        "value": 5
                     },
                     {
                         "name": "L-Sit",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Push-Ups",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Dips",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     },
                     {
                         "name": "Ring Dips",
-                        "reps": 0
+                        "type": "reps",
+                        "value": 0
                     }
                 ]
             }
@@ -245,137 +296,165 @@
         "subcategory": [
             {
                 "name": "Bike",
-                "time": 0,
+                "type": "none",
                 "movements": [
                     {
                         "name": "Bike 500m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Bike 1000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Bike 2000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Bike 5000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Bike 10k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Bike 21k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Bike 42k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     }
                 ]
             },
             {
                 "name": "Ski",
-                "time": 0,
+                "type": "none",
                 "movements": [
                     {
                         "name": "Ski 500m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Ski 1000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Ski 2000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Ski 5000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Ski 10k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Ski 21k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Ski 42k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     }
                 ]
             },
             {
                 "name": "Run",
-                "time": 0,
+                "type": "none",
                 "movements": [
                     {
                         "name": "Run 100m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Run 400m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Run 800m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Run 5000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Run 10k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Run 21k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Run 42k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     }
                 ]
             },
             {
                 "name": "Row",
-                "time": 0,
+                "type": "none",
                 "movements": [
                     {
                         "name": "Row 500m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Row 1000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Row 2000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Row 5000m",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Row 10k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Row 21k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     },
                     {
                         "name": "Row 42k",
-                        "time": 0
+                        "type": "time",
+                        "value": 0
                     }
                 ]
             }

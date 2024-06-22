@@ -21,7 +21,7 @@ export const RecordsView = () => {
     const [activePercentContainer, setActivePercentContainer] = useState(false)
     const [activeNewRecord, setActiveNewRecord] = useState(false)
 
-    const [activeRecord, setActiveRecord] = useState({name: '', record:''})
+    const [activeRecord, setActiveRecord] = useState({name: '', type: '', value:''})
 
     const percentages1 = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75]
     const percentages2 = [80, 85, 90, 95, 100, 105, 110, 115, 120, 125]
@@ -34,24 +34,35 @@ export const RecordsView = () => {
         dataRecordsToUpdate.forEach(category => {
             category.subcategory.forEach(subcategory => {
                 if (subcategory.name === activeRecord.name) {
-                    subcategory.weight = recordValue
+                    subcategory.value = recordValue
                 }
                 subcategory.movements.forEach(movement => {
                     if (movement.name === activeRecord.name) {
-                        movement.weight = recordValue
+                        movement.value = recordValue
                     }
                 })
             })
         })
 
         setData(dataRecordsToUpdate)
-        setActiveRecord({name: activeRecord.name, record: recordValue})
+        setActiveRecord({name: activeRecord.name, type: activeRecord.type, record: recordValue})
 
         const jsonString = JSON.stringify(dataRecordsToUpdate)
         localStorage.setItem("dataRecords", jsonString)
 
         setActiveNewRecord(false)
         setActivePercentContainer(false)
+    }
+
+    // Return Unit by Type of Movement
+    const getUnitByType = (type) => {
+        const units = {
+            weight: "kg",
+            reps: "reps",
+            distance: "m",
+            time: "min"
+        }
+        return units[type]
     }
 
     return (
@@ -98,17 +109,15 @@ export const RecordsView = () => {
                                         type="button"
                                         onClick={() => {
                                             setActiveModal(true)
-                                            setActiveRecord({name: subcategory.name, record: subcategory.weight})
+                                            setActiveRecord({name: subcategory.name, type: subcategory.type, record: subcategory.value})
                                         }}
                                     >
                                         <span>{subcategory.name}</span>
                                         <span>
-                                            {subcategory.weight ? `${subcategory.weight} kg` : null}
-                                            {subcategory.reps ? `${subcategory.reps} Reps` : null}
-                                            {subcategory.distance ? `${subcategory.distance} m` : null}
-                                            {subcategory.time ? `${subcategory.time} min` : null}
-
-                                            {subcategory.weight || subcategory.reps || subcategory.distance || subcategory.time ? null : "-"}
+                                            {subcategory.value
+                                                ? `${subcategory.value} ${getUnitByType(subcategory.type)}`
+                                                : '-'
+                                            }
                                         </span>
                                     </button>
                                 </h3>
@@ -122,17 +131,15 @@ export const RecordsView = () => {
                                                 type="button"
                                                 onClick={() => {
                                                     setActiveModal(true)
-                                                    setActiveRecord({name: movement.name, record: movement.weight})
+                                                    setActiveRecord({name: movement.name, type: movement.type, record: movement.value})
                                                 }}
                                             >
                                                 <span>{movement.name}</span>
                                                 <span>
-                                                    {movement.weight ? `${movement.weight} kg` : null}
-                                                    {movement.reps ? `${movement.reps} Reps` : null}
-                                                    {movement.distance ? `${movement.distance} m` : null}
-                                                    {movement.time ? `${movement.time} min` : null}
-
-                                                    {movement.weight || movement.reps || movement.distance || movement.time ? null : "-"}
+                                                    {movement.value
+                                                        ? `${movement.value} ${getUnitByType(movement.type)}`
+                                                        : '-'
+                                                    }
                                                 </span>
                                             </button>
                                         </li>
@@ -150,14 +157,14 @@ export const RecordsView = () => {
                     onClick={() => {
                         setActiveModal(false)
                         setActivePercentContainer(false)
-                        setActiveRecord({name: '', record: ''})
+                        setActiveRecord({name: '', type: '', record: ''})
                         setRecordValue('')
                     }}
                 >
                     <div onClick={(e) => e.stopPropagation()} className="Records-container-modal">
                         <div className='header'>
                             <p className="title">{activeRecord.name}</p>
-                            <p className="record">{activeRecord.record} kg</p>
+                            <p className="record">{activeRecord.record} {getUnitByType(activeRecord.type)}</p>
                         </div>
 
                         <div className={`buttons ${activePercentContainer ? 'activePercent' : ''}`}>
@@ -203,7 +210,7 @@ export const RecordsView = () => {
                                 {percentages1.map((percent) => (
                                     <div className='row' key={percent}>
                                         <span>{percent}%</span>
-                                        <span>{roundToNearestHalf(activeRecord.record, percent)}kg</span>
+                                        <span>{roundToNearestHalf(activeRecord.record, percent)} {getUnitByType(activeRecord.type)}</span>
                                     </div>
                                 ))}
                             </div>
@@ -211,7 +218,7 @@ export const RecordsView = () => {
                                 {percentages2.map((percent) => (
                                     <div className='row' key={percent}>
                                         <span>{percent}%</span>
-                                        <span>{roundToNearestHalf(activeRecord.record, percent)}kg</span>
+                                        <span>{roundToNearestHalf(activeRecord.record, percent)} {getUnitByType(activeRecord.type)}</span>
                                     </div>
                                 ))}
                             </div>
