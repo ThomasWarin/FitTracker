@@ -26,6 +26,148 @@
             height: 100%;
             background-color: $primary-color-300;
         }
+
+        &-overlay {
+            position: fixed;
+            z-index: 400;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        &-modal {
+            position: relative;
+            width: 320px;
+            background-color: $primary-color-100;
+            border: 1px solid $primary-color-900;
+            padding: 20px;
+            color: $text-color;
+
+            &::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                top: 5px;
+                left: 5px;
+                width: 100%;
+                height: 100%;
+                border: 1px solid $primary-color-900;
+            }
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                font-weight: 700;
+                text-transform: uppercase;
+            }
+
+            .buttons {
+                display: flex;
+                justify-content: space-between;
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    height: 40px;
+                    color: $text-color;
+                    cursor: pointer;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    padding: 10px 15px;
+                    font-size: 14px;
+                    transition: 0.2s;
+                }
+
+                .percent {
+                    background-color: transparent;
+                    border: none;
+                    border-bottom: 1px solid $primary-color-900;
+                    border-top: 1px solid $primary-color-100;
+                }
+
+                .recordContainer {
+                    width: 100%;
+                    display: flex;
+                    justify-content: end;
+                    gap: 20px;
+
+                    input {
+                        height: 40px;
+                        width: 100%;
+                        border: 1px solid $primary-color-900;
+                        border-radius: 4px;
+                        background-color: $primary-color-100;
+                        text-align: center;
+                        font-size: 14px;
+                        font-style: italic;
+                        color: $text-color;
+                    }
+
+                    &.activeRecord {
+                        justify-content: space-between;
+                    }
+                }
+
+                .newRecord {
+                    background-color: $primary-color-200;
+                    border: 1px solid $primary-color-900;
+                }
+
+                &.activePercent {
+                    flex-direction: column-reverse;
+                    align-items: end;
+
+                    .percent {
+                        margin-top: 10px;
+                        width: 100%;
+                        justify-content: center;
+                    }
+
+                    .newRecord {
+                        width: fit-content;
+                    }
+
+                    &:not(:last-child) {
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+
+            .percentContainer {
+                display: flex;
+                gap: 20px;
+
+                .column {
+                    flex: 1;
+
+                    .row {
+                        font-size: 14px;
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 5px 0;
+                        width: 100%;
+                        border-bottom: 1px solid $primary-color-300;
+
+                        &:first-child {
+                            padding: 0 0 5px;
+                        }
+
+                        &:last-child {
+                            padding: 5px 0 0;
+                            border-bottom: none;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     &-search {

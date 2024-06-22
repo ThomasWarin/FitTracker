@@ -3,10 +3,56 @@ import './RecordsView.scss'
 
 import { Icon } from "../SvgComponents/SvgComponents"
 import records from "../../data/records.json"
+import { roundToNearestHalf } from '../../utils/roundToNearestHalf'
 import { useState } from 'react'
 
 export const RecordsView = () => {
+    let dataRecords = JSON.parse(localStorage.getItem("dataRecords"))
+    if (!dataRecords) {
+        const jsonString = JSON.stringify(records)
+        localStorage.setItem("dataRecords", jsonString)
+        dataRecords = records
+    }
+
+    const [data, setData] = useState(dataRecords)
+
     const [search, setSearch] = useState('')
+    const [activeModal, setActiveModal] = useState(false)
+    const [activePercentContainer, setActivePercentContainer] = useState(false)
+    const [activeNewRecord, setActiveNewRecord] = useState(false)
+
+    const [activeRecord, setActiveRecord] = useState({name: '', record:''})
+
+    const percentages1 = [30, 35, 40, 45, 50, 55, 60, 65, 70, 75]
+    const percentages2 = [80, 85, 90, 95, 100, 105, 110, 115, 120, 125]
+
+    const [recordValue, setRecordValue] = useState('')
+    const saveRecord = () => {
+        const dataRecordsToUpdate = [...data];
+
+        // Update record value
+        dataRecordsToUpdate.forEach(category => {
+            category.subcategory.forEach(subcategory => {
+                if (subcategory.name === activeRecord.name) {
+                    subcategory.weight = recordValue
+                }
+                subcategory.movements.forEach(movement => {
+                    if (movement.name === activeRecord.name) {
+                        movement.weight = recordValue
+                    }
+                })
+            })
+        })
+
+        setData(dataRecordsToUpdate)
+        setActiveRecord({name: activeRecord.name, record: recordValue})
+
+        const jsonString = JSON.stringify(dataRecordsToUpdate)
+        localStorage.setItem("dataRecords", jsonString)
+
+        setActiveNewRecord(false)
+        setActivePercentContainer(false)
+    }
 
     return (
         <div className='Records'>
@@ -32,7 +78,7 @@ export const RecordsView = () => {
                 </div>
 
                 {/* Movements List */}
-                {records.map((category) => (
+                {data.map((category) => (
                     // Delete Category with Filter Search Input
                     category.subcategory.filter((subcategory) => subcategory.movements.filter((movement) => movement.name.toLowerCase().includes(search.toLowerCase())).length !== 0).length !== 0 &&
 
@@ -48,7 +94,13 @@ export const RecordsView = () => {
 
                             <div className="Records-category-subcategory" key={subcategory.name}>
                                 <h3>
-                                    <button type="button">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setActiveModal(true)
+                                            setActiveRecord({name: subcategory.name, record: subcategory.weight})
+                                        }}
+                                    >
                                         <span>{subcategory.name}</span>
                                         <span>
                                             {subcategory.weight ? `${subcategory.weight} kg` : null}
@@ -66,7 +118,13 @@ export const RecordsView = () => {
                                         movement.name.toLowerCase().includes(search.toLowerCase()) &&
 
                                         <li key={movement.name}>
-                                            <button type="button">
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    setActiveModal(true)
+                                                    setActiveRecord({name: movement.name, record: movement.weight})
+                                                }}
+                                            >
                                                 <span>{movement.name}</span>
                                                 <span>
                                                     {movement.weight ? `${movement.weight} kg` : null}
@@ -84,6 +142,82 @@ export const RecordsView = () => {
                         ))}
                     </div>
                 ))}
+
+                {/* Popup to save Record */}
+                {activeModal &&
+                <div 
+                    className="Records-container-overlay"
+                    onClick={() => {
+                        setActiveModal(false)
+                        setActivePercentContainer(false)
+                        setActiveRecord({name: '', record: ''})
+                        setRecordValue('')
+                    }}
+                >
+                    <div onClick={(e) => e.stopPropagation()} className="Records-container-modal">
+                        <div className='header'>
+                            <p className="title">{activeRecord.name}</p>
+                            <p className="record">{activeRecord.record} kg</p>
+                        </div>
+
+                        <div className={`buttons ${activePercentContainer ? 'activePercent' : ''}`}>
+                            {!activeNewRecord && <button type="button" className='percent' onClick={() => setActivePercentContainer(!activePercentContainer)}>
+                                <Icon name="Percent" size={ 14 } color="#4C5948" />
+                                Percent
+                            </button>}
+                            <div className={`recordContainer ${activeNewRecord ? 'activeRecord' : ''}`}>
+                                {activeNewRecord &&
+                                    <input
+                                        type="number"
+                                        id="recordInput"
+                                        value={recordValue === '' ? activeRecord.record : recordValue}
+                                        onChange={(e) => {
+                                            if (!e.target.value) {
+                                                setRecordValue(0)
+                                            } else {
+                                                setRecordValue(parseInt(e.target.value, 10))
+                                            }
+                                        }}
+                                    />
+                                }
+                                <button
+                                    type="button"
+                                    className='newRecord'
+                                    onClick={() => {
+                                        if (!activeNewRecord) {
+                                            setActiveNewRecord(true)
+                                        } else {
+                                            saveRecord()
+                                        }
+                                    }}
+                                >
+                                    {!activeNewRecord && <> <Icon name="Plus" size={ 14 } color="#4C5948" /> New Record </>}
+                                    {activeNewRecord && <> <Icon name="Check" size={ 14 } color="#4C5948" /> Save </>}
+                                </button>
+                            </div>
+                        </div>
+
+                        {activePercentContainer && !activeNewRecord &&
+                        <div className='percentContainer'>
+                            <div className='column'>
+                                {percentages1.map((percent) => (
+                                    <div className='row' key={percent}>
+                                        <span>{percent}%</span>
+                                        <span>{roundToNearestHalf(activeRecord.record, percent)}kg</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className='column'>
+                                {percentages2.map((percent) => (
+                                    <div className='row' key={percent}>
+                                        <span>{percent}%</span>
+                                        <span>{roundToNearestHalf(activeRecord.record, percent)}kg</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>}
+                    </div>
+                </div>}
 
             </div>
         </div>
