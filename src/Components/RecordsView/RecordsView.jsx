@@ -27,7 +27,6 @@ export const RecordsView = () => {
     const percentages2 = [80, 85, 90, 95, 100, 105, 110, 115, 120, 125]
 
     const [recordValue, setRecordValue] = useState('')
-    console.log(recordValue);
     const saveRecord = () => {
         const dataRecordsToUpdate = [...data]
         const recordToSave = !recordValue ? 0 : recordValue
