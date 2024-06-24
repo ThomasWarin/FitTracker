@@ -106,22 +106,28 @@ export const RecordsView = () => {
 
                             <div className="Records-category-subcategory" key={subcategory.name}>
                                 <h3>
-                                    <button
-                                        type="button"
-                                        onClick={() => {
-                                            setActiveModal(true)
-                                            setActiveRecord({name: subcategory.name, type: subcategory.type, record: subcategory.value})
-                                            setRecordValue(subcategory.value)
-                                        }}
-                                    >
-                                        <span>{subcategory.name}</span>
-                                        <span>
-                                            {subcategory.value
-                                                ? `${subcategory.value} ${getUnitByType(subcategory.type)}`
-                                                : '-'
-                                            }
-                                        </span>
-                                    </button>
+                                    {subcategory.type !== 'none' ? (
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setActiveModal(true)
+                                                setActiveRecord({name: subcategory.name, type: subcategory.type, record: subcategory.value})
+                                                setRecordValue(subcategory.value)
+                                            }}
+                                        >
+                                            <span>{subcategory.name}</span>
+                                            <span>
+                                                {subcategory.value
+                                                    ? `${subcategory.value} ${getUnitByType(subcategory.type)}`
+                                                    : '-'
+                                                }
+                                            </span>
+                                        </button>
+                                    ) : (
+                                        <div className='buttonLike'>
+                                            <span>{subcategory.name}</span>
+                                        </div>
+                                    )}
                                 </h3>
                                 <ul className="Records-category-list">
                                     {subcategory.movements.map((movement) => (
