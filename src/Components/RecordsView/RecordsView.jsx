@@ -27,25 +27,27 @@ export const RecordsView = () => {
     const percentages2 = [80, 85, 90, 95, 100, 105, 110, 115, 120, 125]
 
     const [recordValue, setRecordValue] = useState('')
+    console.log(recordValue);
     const saveRecord = () => {
-        const dataRecordsToUpdate = [...data];
+        const dataRecordsToUpdate = [...data]
+        const recordToSave = !recordValue ? 0 : recordValue
 
         // Update record value
         dataRecordsToUpdate.forEach(category => {
             category.subcategory.forEach(subcategory => {
                 if (subcategory.name === activeRecord.name) {
-                    subcategory.value = recordValue
+                    subcategory.value = recordToSave
                 }
                 subcategory.movements.forEach(movement => {
                     if (movement.name === activeRecord.name) {
-                        movement.value = recordValue
+                        movement.value = recordToSave
                     }
                 })
             })
         })
 
         setData(dataRecordsToUpdate)
-        setActiveRecord({name: activeRecord.name, type: activeRecord.type, record: recordValue})
+        setActiveRecord({name: activeRecord.name, type: activeRecord.type, record: recordToSave})
 
         const jsonString = JSON.stringify(dataRecordsToUpdate)
         localStorage.setItem("dataRecords", jsonString)
@@ -110,6 +112,7 @@ export const RecordsView = () => {
                                         onClick={() => {
                                             setActiveModal(true)
                                             setActiveRecord({name: subcategory.name, type: subcategory.type, record: subcategory.value})
+                                            setRecordValue(subcategory.value)
                                         }}
                                     >
                                         <span>{subcategory.name}</span>
@@ -132,6 +135,7 @@ export const RecordsView = () => {
                                                 onClick={() => {
                                                     setActiveModal(true)
                                                     setActiveRecord({name: movement.name, type: movement.type, record: movement.value})
+                                                    setRecordValue(movement.value)
                                                 }}
                                             >
                                                 <span>{movement.name}</span>
@@ -157,6 +161,7 @@ export const RecordsView = () => {
                     onClick={() => {
                         setActiveModal(false)
                         setActivePercentContainer(false)
+                        setActiveNewRecord(false)
                         setActiveRecord({name: '', type: '', record: ''})
                         setRecordValue('')
                     }}
@@ -177,10 +182,10 @@ export const RecordsView = () => {
                                     <input
                                         type="number"
                                         id="recordInput"
-                                        value={recordValue === '' ? activeRecord.record : recordValue}
+                                        value={recordValue}
                                         onChange={(e) => {
                                             if (!e.target.value) {
-                                                setRecordValue(0)
+                                                setRecordValue('')
                                             } else {
                                                 setRecordValue(parseInt(e.target.value, 10))
                                             }
