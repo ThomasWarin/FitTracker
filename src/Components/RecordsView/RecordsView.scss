@@ -111,6 +111,18 @@
                         color: $text-color;
                     }
 
+                    .inputTime {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        gap: 4px;
+
+                        span {
+                            margin-left: 1.5px;
+                            font-weight: 700;
+                        }
+                    }
+
                     &.activeRecord {
                         justify-content: space-between;
                     }

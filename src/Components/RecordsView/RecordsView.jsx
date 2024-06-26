@@ -27,11 +27,32 @@ export const RecordsView = () => {
     const percentages2 = [80, 85, 90, 95, 100, 105, 110, 115, 120, 125]
 
     const [recordValue, setRecordValue] = useState('')
+    const [minutesValue, setMinutesValue] = useState('')
+    const [secondsValue, setSecondsValue] = useState('')
+
     const saveRecord = () => {
         const dataRecordsToUpdate = [...data]
-        const recordToSave = !recordValue ? 0 : recordValue
+        let recordToSave = 0
 
-        // Update record value
+        // Update record value (weight, distance, reps)
+        if (recordValue) {
+            recordToSave = recordValue
+        }
+        // Update record value (time)
+        if (minutesValue || secondsValue) {
+            const actualMinutes = parseInt(minutesValue, 10)
+            const actualSeconds = parseInt(secondsValue, 10)
+
+            const minutesToSave = (!actualMinutes || actualMinutes < 0) ? '00' :
+                                  (actualMinutes < 10) ? `0${actualMinutes}` : actualMinutes
+
+            const secondsToSave = (!actualSeconds || actualSeconds < 0) ? '00' :
+                                  (actualSeconds >= 60) ? 59 :
+                                  (actualSeconds < 10) ? `0${actualSeconds}` : actualSeconds
+
+            recordToSave = `${minutesToSave}:${secondsToSave}`
+        }
+
         dataRecordsToUpdate.forEach(category => {
             category.subcategory.forEach(subcategory => {
                 if (subcategory.name === activeRecord.name) {
@@ -45,8 +66,8 @@ export const RecordsView = () => {
             })
         })
 
-        setData(dataRecordsToUpdate)
         setActiveRecord({name: activeRecord.name, type: activeRecord.type, record: recordToSave})
+        setData(dataRecordsToUpdate)
 
         const jsonString = JSON.stringify(dataRecordsToUpdate)
         localStorage.setItem("dataRecords", jsonString)
@@ -140,7 +161,15 @@ export const RecordsView = () => {
                                                 onClick={() => {
                                                     setActiveModal(true)
                                                     setActiveRecord({name: movement.name, type: movement.type, record: movement.value})
-                                                    setRecordValue(movement.value)
+                                                    if (movement.type === 'time') {
+                                                        if (movement.value !== 0) {
+                                                            const [minutes, seconds] = movement.value.split(':')
+                                                            setMinutesValue(minutes)
+                                                            setSecondsValue(seconds)
+                                                        }
+                                                    } else {
+                                                        setRecordValue(movement.value)
+                                                    }
                                                 }}
                                             >
                                                 <span>{movement.name}</span>
@@ -169,6 +198,8 @@ export const RecordsView = () => {
                         setActiveNewRecord(false)
                         setActiveRecord({name: '', type: '', record: ''})
                         setRecordValue('')
+                        setMinutesValue('')
+                        setSecondsValue('')
                     }}
                 >
                     <div onClick={(e) => e.stopPropagation()} className="Records-container-modal">
@@ -183,7 +214,8 @@ export const RecordsView = () => {
                                 Percent
                             </button>}
                             <div className={`recordContainer ${activeNewRecord ? 'activeRecord' : ''}`}>
-                                {activeNewRecord &&
+                                {   activeNewRecord &&
+                                    activeRecord.type !== 'time' &&
                                     <input
                                         type="number"
                                         id="recordInput"
@@ -196,6 +228,36 @@ export const RecordsView = () => {
                                             }
                                         }}
                                     />
+                                }
+                                {   activeNewRecord &&
+                                    activeRecord.type === 'time' &&
+                                    <div className='inputTime'>
+                                        <input
+                                            type="number"
+                                            id='minutesInput'
+                                            value={minutesValue}
+                                            onChange={(e) => {
+                                                if (!e.target.value || e.target.value < 0) {
+                                                    setMinutesValue('')
+                                                } else {
+                                                    setMinutesValue(parseInt(e.target.value, 10))
+                                                }
+                                            }}
+                                        />
+                                        <span>:</span>
+                                        <input
+                                            type="number"
+                                            id='secondsInput'
+                                            value={secondsValue}
+                                            onChange={(e) => {
+                                                if (!e.target.value || e.target.value < 0) {
+                                                    setSecondsValue('')
+                                                } else {
+                                                    setSecondsValue(parseInt(e.target.value, 10))
+                                                }
+                                            }}
+                                        />
+                                    </div>
                                 }
                                 <button
                                     type="button"
