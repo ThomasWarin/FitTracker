@@ -87,6 +87,34 @@ export const RecordsView = () => {
         return units[type]
     }
 
+    /** Converts a time string in "MM:SS" format to a new time based on the given percentage. */
+    const convertTimeToPercent = (time, percentage) => {
+
+        // Return 0 if the record is not provided
+        if (time === 0) return 0
+
+        // Split the time string into minutes and seconds
+        const [minutes, seconds] = time.split(':')
+        // Convert minutes and seconds from strings to integers
+        const minutesToConvert = parseInt(minutes, 10)
+        const secondsToConvert = parseInt(seconds, 10)
+
+        // Convert the total time to seconds and Apply the percentage
+        const totalSeconds = minutesToConvert * 60 + secondsToConvert
+        const totalSecondsConverted = totalSeconds * (percentage / 100)
+
+        // Calculate the converted minutes and seconds
+        const minutesConverted = Math.floor(totalSecondsConverted / 60)
+        const secondsConverted = Math.floor(totalSecondsConverted % 60)
+
+        // Format the minutes and seconds to always have minimum two digits
+        const minutesFormatted = String(minutesConverted).padStart(2, '0')
+        const secondsFormatted = String(secondsConverted).padStart(2, '0')
+
+        // Return the formatted time string in "*MM:SS" format
+        return `${minutesFormatted}:${secondsFormatted}`
+    }
+
     return (
         <div className='Records'>
             <div className="Records-container">
@@ -282,7 +310,14 @@ export const RecordsView = () => {
                                 {percentages1.map((percent) => (
                                     <div className='row' key={percent}>
                                         <span>{percent}%</span>
-                                        <span>{roundToNearestHalf(activeRecord.record, percent)} {getUnitByType(activeRecord.type)}</span>
+                                        <span>
+                                        {activeRecord.type !== 'time'
+                                            ? roundToNearestHalf(activeRecord.record, percent)
+                                            : convertTimeToPercent(activeRecord.record, percent)
+                                        }
+                                        {' '}
+                                        {getUnitByType(activeRecord.type)}
+                                        </span>
                                     </div>
                                 ))}
                             </div>
@@ -290,7 +325,14 @@ export const RecordsView = () => {
                                 {percentages2.map((percent) => (
                                     <div className='row' key={percent}>
                                         <span>{percent}%</span>
-                                        <span>{roundToNearestHalf(activeRecord.record, percent)} {getUnitByType(activeRecord.type)}</span>
+                                        <span>
+                                        {activeRecord.type !== 'time'
+                                            ? roundToNearestHalf(activeRecord.record, percent)
+                                            : convertTimeToPercent(activeRecord.record, percent)
+                                        }
+                                        {' '}
+                                        {getUnitByType(activeRecord.type)}
+                                        </span>
                                     </div>
                                 ))}
                             </div>
